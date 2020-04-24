@@ -611,18 +611,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../frontend/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -692,18 +680,6 @@
         
       </ul>
     </nav>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../search/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
   </li>
 
         
@@ -868,13 +844,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#metadata-entities-explained" class="md-nav__link">
-    Metadata Entities Explained
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#configurations" class="md-nav__link">
     Configurations
   </a>
@@ -938,18 +907,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -998,18 +955,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../databuilder/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -1042,18 +987,6 @@
   <li class="md-nav__item">
     <a href="../../../../common/" title="Overview" class="md-nav__link">
       Overview
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../common/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
     </a>
   </li>
 
@@ -1113,13 +1046,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#metadata-entities-explained" class="md-nav__link">
-    Metadata Entities Explained
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#configurations" class="md-nav__link">
     Configurations
   </a>
@@ -1147,18 +1073,10 @@
                 
                 <h1 id="atlas-proxy">Atlas Proxy<a class="headerlink" href="#atlas-proxy" title="Permanent link">&para;</a></h1>
 <p>In order to make the Atlas-Amundsen integration smooth, we&rsquo;ve released a python package, 
-<a href="https://github.com/dwarszawski/amundsen-atlas-types">amundsenatlastypes</a> that has all the required entity definitions along with helper functions needed to make 
-Atlas compatible with Amundsen. </p>
+<a href="https://github.com/dwarszawski/amundsen-atlas-types">amundsenatlastypes</a> that has all the required entity definitions along with helper functions needed to make Atlas compatible with Amundsen.</p>
 <p>Usage and Installation of <code>amundsenatlastypes</code> can be found <a href="https://github.com/dwarszawski/amundsen-atlas-types/blob/master/README.md">here</a></p>
-<h3 id="metadata-entities-explained">Metadata Entities Explained<a class="headerlink" href="#metadata-entities-explained" title="Permanent link">&para;</a></h3>
-<p>In order to support different kind of statistics for Table, Column (or even DataSet) 
-we need to add new entities <code>Metadata</code> (table_metadata, column_metadata etc.) and make a relationship between Metadata and DataSet.</p>
-<p>Also, in order to store User information and User&rsquo;s statistics and actions, we&rsquo;ll need a new User type entity, 
-which will be linked with Metadata as Readers, Owners, Managers etc.</p>
-<p>We are not going to add custom attributes directly to a Table/DataSet entity, to make it backward compatible and clean of course.</p>
 <h3 id="configurations">Configurations<a class="headerlink" href="#configurations" title="Permanent link">&para;</a></h3>
-<p>Once you are done with setting up required entity definitions using <a href="https://github.com/dwarszawski/amundsen-atlas-types">amundsenatlastypes</a>,
-you are all set to use Atlas with Amundsen. </p>
+<p>Once you are done with setting up required entity definitions using <a href="https://github.com/dwarszawski/amundsen-atlas-types">amundsenatlastypes</a>, you are all set to use Atlas with Amundsen.</p>
 <p>Other things to configure:</p>
 <ul>
 <li><a href="/docs/proxy/atlas/popular_tables.md">Popular Tables</a></li>

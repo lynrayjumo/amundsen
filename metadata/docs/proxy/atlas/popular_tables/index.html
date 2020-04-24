@@ -611,18 +611,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../../frontend/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -692,18 +680,6 @@
         
       </ul>
     </nav>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../../search/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
   </li>
 
         
@@ -931,18 +907,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -991,18 +955,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../../databuilder/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -1035,18 +987,6 @@
   <li class="md-nav__item">
     <a href="../../../../../common/" title="Overview" class="md-nav__link">
       Overview
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../../../common/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
     </a>
   </li>
 
@@ -1135,79 +1075,41 @@
 <p>The required entity definitions for Atlas can be applied using <a href="https://github.com/dwarszawski/amundsen-atlas-types/blob/master/README.md#kickstart-apache-atlas">amundsenatlastypes</a>. </p>
 <h2 id="popular-tables">Popular Tables<a class="headerlink" href="#popular-tables" title="Permanent link">&para;</a></h2>
 <p>Amundsen has a concept of popular tables, which is a default entry point of the application for now. 
-Popular Tables API expects you to generate the relationships above, and fill in your <code>popularityScore</code> within <code>table_metadata</code> entity
-for each Table. 
-The suggested formula to generate the popularity score is
+Popular Tables API leverages <code>popularityScore</code> attribute of <code>Table</code> super type to enable custom sorting strategy.</p>
+<p>The suggested formula to generate the popularity score is provided below and should be applied by the external script or batch/stream process to update Atlas entities accordingly.
 <div class="highlight"><pre><span></span><code>Popularity score = number of distinct readers * log(total number of reads)
 </code></pre></div></p>
-<p>Sample code to fill in the <code>popularityScore</code>, using above relationships would be something like this. </p>
-<div class="highlight"><pre><span></span><code>    <span class="c1"># Generate a list of all resources/tables, and group them by users&#39; number of access</span>
-    <span class="n">updated_list</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;customer_dim@cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;dummy@gmail.com&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;user@gmail.copm&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="s1">&#39;popularity_score&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;sales_fact@cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;dummy@gmail.com&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;foobar@gmail.com&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;popularity_score&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;log_fact_daily_mv@cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;dummy@gmail.com&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;popularity_score&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;amundsen_logging_fact_monthly_mv_updated@cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;user@gmail.com&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;boo@gmail.com&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">]],</span>
-         <span class="s1">&#39;popularity_score&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;product_dim@cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;dummy@gmail.com&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;boo@gmail.com&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;foobar@gmail.com&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">]],</span> <span class="s1">&#39;popularity_score&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
-    <span class="p">]</span>
-
-
-    <span class="c1"># Iterate over each item and generate relevant entities</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">updated_list</span><span class="p">:</span>
-        <span class="n">bulk_entities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="c1"># Qualified Name (qn)</span>
-        <span class="n">qn_entity</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;resource&#39;</span><span class="p">)</span>
-        <span class="n">entity</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">entity_unique_attribute</span><span class="p">(</span><span class="s1">&#39;Table&#39;</span><span class="p">,</span> <span class="n">qualifiedName</span><span class="o">=</span><span class="n">qn_entity</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">entity</span><span class="o">.</span><span class="n">entity</span><span class="p">:</span>
-            <span class="n">qn_metadata</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">qn_entity</span><span class="si">}</span><span class="s1">.metadata&#39;</span>
-
-            <span class="n">metadata</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;relationshipAttributes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">)</span>
-
-            <span class="c1"># Create Metadata if not exist already</span>
-            <span class="k">if</span> <span class="n">metadata</span><span class="p">:</span>
-                <span class="n">metadata_guid</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;guid&quot;</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Temp GUID</span>
-                <span class="n">metadata_guid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10000</span>
-
-            <span class="c1"># Add/Update Metadata and the popularityScore</span>
-            <span class="n">bulk_entities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="p">{</span><span class="s1">&#39;typeName&#39;</span><span class="p">:</span> <span class="s1">&#39;table_metadata&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;guid&#39;</span><span class="p">:</span> <span class="n">metadata_guid</span><span class="p">,</span>
-                 <span class="s1">&#39;attributes&#39;</span><span class="p">:</span>
-                    <span class="p">{</span><span class="s1">&#39;qualifiedName&#39;</span><span class="p">:</span> <span class="n">qn_metadata</span><span class="p">,</span>
-                     <span class="s1">&#39;popularityScore&#39;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;popularity_score&quot;</span><span class="p">),</span>
-                     <span class="s1">&#39;table&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;guid&#39;</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s1">&#39;guid&#39;</span><span class="p">],</span>
-                                      <span class="s1">&#39;typeName&#39;</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s1">&#39;typeName&#39;</span><span class="p">]}}</span>
-                 <span class="p">}</span>
-            <span class="p">)</span>
-
-            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">user</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)):</span>
-                <span class="n">qn_user</span><span class="p">,</span> <span class="n">access_count</span> <span class="o">=</span> <span class="n">user</span>
-                <span class="n">qn_reader</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">qn_metadata</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">qn_user</span><span class="si">}</span><span class="s1">.reader&#39;</span>
-                <span class="n">user_entity</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">entity_unique_attribute</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span> <span class="n">qualifiedName</span><span class="o">=</span><span class="n">qn_user</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">user_entity</span><span class="o">.</span><span class="n">entity</span><span class="p">:</span>
-                    <span class="n">user_guid</span> <span class="o">=</span> <span class="n">user_entity</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;guid&quot;</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">user_guid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20000</span> <span class="o">+</span> <span class="n">index</span>
-                    <span class="n">bulk_entities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="p">{</span><span class="s1">&#39;typeName&#39;</span><span class="p">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;guid&#39;</span><span class="p">:</span> <span class="n">user_guid</span><span class="p">,</span>
-                         <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;qualifiedName&#39;</span><span class="p">:</span> <span class="n">qn_user</span><span class="p">}</span>
-                         <span class="p">}</span>
-                    <span class="p">)</span>
-                <span class="c1"># Add/Update Reader object of user based on access counts</span>
-                <span class="n">bulk_entities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="p">{</span><span class="s1">&#39;typeName&#39;</span><span class="p">:</span> <span class="s1">&#39;Reader&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;qualifiedName&#39;</span><span class="p">:</span> <span class="n">qn_reader</span><span class="p">,</span>
-                                    <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">access_count</span><span class="p">,</span>
-                                    <span class="s1">&#39;entityMetadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;guid&#39;</span><span class="p">:</span> <span class="n">metadata_guid</span><span class="p">},</span>
-                                    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;guid&#39;</span><span class="p">:</span> <span class="n">user_guid</span><span class="p">}}</span>
-                     <span class="p">}</span>
-                <span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">bulk_entities</span><span class="p">:</span>
-                <span class="n">client</span><span class="o">.</span><span class="n">entity_bulk</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="n">bulk_entities</span><span class="p">})</span>
+<p><code>Table</code> entity definition with <code>popularityScore</code> attribute <a href="https://github.com/dwarszawski/amundsen-atlas-types/blob/master/amundsenatlastypes/schema/01_2_table_schema.json">amundsenatlastypes==1.0.2</a>. </p>
+<div class="highlight"><pre><span></span><code>    <span class="p">{</span>
+      <span class="nt">&quot;entityDefs&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;superTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;DataSet&quot;</span>
+          <span class="p">],</span>
+          <span class="nt">&quot;attributeDefs&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;popularityScore&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;typeName&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;isOptional&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+              <span class="nt">&quot;cardinality&quot;</span><span class="p">:</span> <span class="s2">&quot;SINGLE&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;isUnique&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+              <span class="nt">&quot;isIndexable&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+              <span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;readers&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;typeName&quot;</span><span class="p">:</span> <span class="s2">&quot;array&lt;Reader&gt;&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;isOptional&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+              <span class="nt">&quot;cardinality&quot;</span><span class="p">:</span> <span class="s2">&quot;LIST&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;isUnique&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+              <span class="nt">&quot;isIndexable&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+              <span class="nt">&quot;includeInNotification&quot;</span><span class="p">:</span> <span class="kc">false</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
 </code></pre></div>
                 
                   

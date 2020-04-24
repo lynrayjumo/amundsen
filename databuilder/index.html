@@ -611,18 +611,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../frontend/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -692,18 +680,6 @@
         
       </ul>
     </nav>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../search/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
   </li>
 
         
@@ -887,18 +863,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../metadata/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -960,6 +924,13 @@
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
     Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#doc" class="md-nav__link">
+    Doc
   </a>
   
 </li>
@@ -1086,6 +1057,13 @@
           <li class="md-nav__item">
   <a href="#postgresmetadataextractor" class="md-nav__link">
     PostgresMetadataExtractor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db2metadataextractor" class="md-nav__link">
+    Db2MetadataExtractor
   </a>
   
 </li>
@@ -1289,18 +1267,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -1333,18 +1299,6 @@
   <li class="md-nav__item">
     <a href="../common/" title="Overview" class="md-nav__link">
       Overview
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../common/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
     </a>
   </li>
 
@@ -1406,6 +1360,13 @@
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
     Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#doc" class="md-nav__link">
+    Doc
   </a>
   
 </li>
@@ -1532,6 +1493,13 @@
           <li class="md-nav__item">
   <a href="#postgresmetadataextractor" class="md-nav__link">
     PostgresMetadataExtractor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db2metadataextractor" class="md-nav__link">
+    Db2MetadataExtractor
   </a>
   
 </li>
@@ -1745,6 +1713,10 @@
 <ul>
 <li>Python = 2.7.x or Python &gt;= 3.6.x</li>
 </ul>
+<h2 id="doc">Doc<a class="headerlink" href="#doc" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://lyft.github.io/amundsen/">https://lyft.github.io/amundsen/</a></li>
+</ul>
 <h2 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h2>
 <p>ETL job consists of extraction of records from the source, transform records, if necessary, and load records into the sink. Amundsen Databuilder is a ETL framework for Amundsen and there are corresponding components for ETL called Extractor, Transformer, and Loader that deals with record level operation. A component called task controls all these three components.
 Job is the highest level component in Databuilder that controls task and publisher and is the one that client use to launch the ETL job.</p>
@@ -1888,6 +1860,21 @@ to <code>False</code>, and <code>CLUSTER_KEY</code> to what you wish to use as t
     <span class="n">conf</span><span class="o">=</span><span class="n">job_config</span><span class="p">,</span>
     <span class="n">task</span><span class="o">=</span><span class="n">DefaultTask</span><span class="p">(</span>
         <span class="n">extractor</span><span class="o">=</span><span class="n">PostgresMetadataExtractor</span><span class="p">(),</span>
+        <span class="n">loader</span><span class="o">=</span><span class="n">AnyLoader</span><span class="p">()))</span>
+<span class="n">job</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
+</code></pre></div>
+
+<h4 id="db2metadataextractor"><a href="https://github.com/lyft/amundsendatabuilder/blob/master/databuilder/extractor/db2_metadata_extractor.py" title="Db2MetadataExtractor">Db2MetadataExtractor</a><a class="headerlink" href="#db2metadataextractor" title="Permanent link">&para;</a></h4>
+<p>An extractor that extracts table and column metadata including database, schema, table name, table description, column name and column description from a Unix, Windows or Linux Db2 database or BigSQL.</p>
+<p>The <code>where_clause_suffix</code> below should define which schemas you&rsquo;d like to query or those that you would not (see <a href="https://github.com/lyft/amundsendatabuilder/blob/master/example/sample_db2_data_loader.py">the sample data loader</a> for an example).</p>
+<p>The SQL query driving the extraction is defined <a href="https://github.com/lyft/amundsendatabuilder/blob/master/databuilder/extractor/db2_metadata_extractor.py">here</a></p>
+<div class="highlight"><pre><span></span><code><span class="n">job_config</span> <span class="o">=</span> <span class="n">ConfigFactory</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+    <span class="s1">&#39;extractor.db2_metadata.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Db2MetadataExtractor</span><span class="o">.</span><span class="n">WHERE_CLAUSE_SUFFIX_KEY</span><span class="p">):</span> <span class="n">where_clause_suffix</span><span class="p">,</span>
+    <span class="s1">&#39;extractor.db2_metadata.extractor.sqlalchemy.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">SQLAlchemyExtractor</span><span class="o">.</span><span class="n">CONN_STRING</span><span class="p">):</span> <span class="n">connection_string</span><span class="p">()})</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">DefaultJob</span><span class="p">(</span>
+    <span class="n">conf</span><span class="o">=</span><span class="n">job_config</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="n">DefaultTask</span><span class="p">(</span>
+        <span class="n">extractor</span><span class="o">=</span><span class="n">Db2MetadataExtractor</span><span class="p">(),</span>
         <span class="n">loader</span><span class="o">=</span><span class="n">AnyLoader</span><span class="p">()))</span>
 <span class="n">job</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
 </code></pre></div>
@@ -2220,7 +2207,7 @@ job.launch()
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../metadata/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../metadata/docs/proxy/neptune/" title="Neptune Backend" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -2229,7 +2216,7 @@ job.launch()
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Code Of Conduct
+                Neptune Backend
               </span>
             </div>
           </a>

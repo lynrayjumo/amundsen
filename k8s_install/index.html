@@ -693,18 +693,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../frontend/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -774,18 +762,6 @@
         
       </ul>
     </nav>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../search/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
   </li>
 
         
@@ -969,18 +945,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../metadata/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -1029,18 +993,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../databuilder/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -1073,18 +1025,6 @@
   <li class="md-nav__item">
     <a href="../common/" title="Overview" class="md-nav__link">
       Overview
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../common/CODE_OF_CONDUCT/" title="Code Of Conduct" class="md-nav__link">
-      Code Of Conduct
     </a>
   </li>
 
@@ -1362,16 +1302,34 @@
 <td>Frontend pod specific affinity.</td>
 </tr>
 <tr>
+<td>frontEnd.annotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>Frontend service specific tolerations.</td>
+</tr>
+<tr>
+<td>frontEnd.baseUrl</td>
+<td>string</td>
+<td><code>"http://localhost"</code></td>
+<td>used by notifications util to provide links to amundsen pages in emails.</td>
+</tr>
+<tr>
 <td>frontEnd.createOidcSecret</td>
 <td>bool</td>
 <td><code>false</code></td>
 <td>OIDC needs some configuration. If you want the chart to make your secrets, set this to true and set the next four values. If you don&rsquo;t want to configure your secrets via helm, you can still use the amundsen-oidc-config.yaml as a template</td>
 </tr>
 <tr>
-<td>frontEnd.imageVersion</td>
+<td>frontEnd.image</td>
+<td>string</td>
+<td><code>"amundsendev/amundsen-frontend"</code></td>
+<td>The image of the frontend container.</td>
+</tr>
+<tr>
+<td>frontEnd.imageTag</td>
 <td>string</td>
 <td><code>"2.0.0"</code></td>
-<td>The frontend version of the metadata container.</td>
+<td>The image tag of the frontend container.</td>
 </tr>
 <tr>
 <td>frontEnd.nodeSelector</td>
@@ -1384,6 +1342,12 @@
 <td>bool</td>
 <td><code>false</code></td>
 <td>To enable auth via OIDC, set this to true.</td>
+</tr>
+<tr>
+<td>frontEnd.podAnnotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>Frontend pod specific annotations.</td>
 </tr>
 <tr>
 <td>frontEnd.replicas</td>
@@ -1410,6 +1374,12 @@
 <td>The port the frontend service will be exposed on via the loadbalancer.</td>
 </tr>
 <tr>
+<td>frontEnd.serviceType</td>
+<td>string</td>
+<td><code>"ClusterIP"</code></td>
+<td>The frontend service type. See service types <a href="https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types">ref</a></td>
+</tr>
+<tr>
 <td>frontEnd.tolerations</td>
 <td>list</td>
 <td><code>[]</code></td>
@@ -1422,10 +1392,22 @@
 <td>Metadata pod specific affinity.</td>
 </tr>
 <tr>
-<td>metadata.imageVersion</td>
+<td>metadata.annotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>Metadata service specific tolerations.</td>
+</tr>
+<tr>
+<td>metadata.image</td>
+<td>string</td>
+<td><code>"amundsendev/amundsen-metadata"</code></td>
+<td>The image of the metadata container.</td>
+</tr>
+<tr>
+<td>metadata.imageTag</td>
 <td>string</td>
 <td><code>"2.0.0"</code></td>
-<td>The image version of the metadata container.</td>
+<td>The image tag of the metadata container.</td>
 </tr>
 <tr>
 <td>metadata.neo4jEndpoint</td>
@@ -1438,6 +1420,12 @@
 <td>object</td>
 <td><code>{}</code></td>
 <td>Metadata pod specific nodeSelector.</td>
+</tr>
+<tr>
+<td>metadata.podAnnotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>Metadata pod specific annotations.</td>
 </tr>
 <tr>
 <td>metadata.replicas</td>
@@ -1458,6 +1446,12 @@
 <td>The metadata service name.</td>
 </tr>
 <tr>
+<td>metadata.serviceType</td>
+<td>string</td>
+<td><code>"ClusterIP"</code></td>
+<td>The metadata service type. See service types <a href="https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types">ref</a></td>
+</tr>
+<tr>
 <td>metadata.tolerations</td>
 <td>list</td>
 <td><code>[]</code></td>
@@ -1468,6 +1462,12 @@
 <td>object</td>
 <td><code>{}</code></td>
 <td>neo4j specific affinity.</td>
+</tr>
+<tr>
+<td>neo4j.annotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>neo4j service specific tolerations.</td>
 </tr>
 <tr>
 <td>neo4j.backup</td>
@@ -1536,6 +1536,12 @@
 <td>Neo4j persistence. Turn this on to keep your data between pod crashes, etc. This is also needed for backups.</td>
 </tr>
 <tr>
+<td>neo4j.podAnnotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>neo4j pod specific annotations.</td>
+</tr>
+<tr>
 <td>neo4j.resources</td>
 <td>object</td>
 <td><code>{}</code></td>
@@ -1560,6 +1566,12 @@
 <td>amundsen application wide configuration of nodeSelector. This applies to search, metadata, frontend and neo4j. Elasticsearch has it&rsquo;s own configuation properties for this. <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector">ref</a></td>
 </tr>
 <tr>
+<td>podAnnotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>amundsen application wide configuration of podAnnotations. This applies to search, metadata, frontend and neo4j. Elasticsearch has it&rsquo;s own configuation properties for this. <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/">ref</a></td>
+</tr>
+<tr>
 <td>provider</td>
 <td>string</td>
 <td><code>"aws"</code></td>
@@ -1572,22 +1584,40 @@
 <td>Search pod specific affinity.</td>
 </tr>
 <tr>
+<td>search.annotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>Search service specific tolerations.</td>
+</tr>
+<tr>
 <td>search.elasticsearchEndpoint</td>
 <td>string</td>
 <td><code>nil</code></td>
 <td>The name of the service hosting elasticsearch on your cluster, if you bring your own. You should only need to change this, if you don&rsquo;t use the version in this chart.</td>
 </tr>
 <tr>
-<td>search.imageVersion</td>
+<td>search.image</td>
+<td>string</td>
+<td><code>"amundsendev/amundsen-search"</code></td>
+<td>The image of the search container.</td>
+</tr>
+<tr>
+<td>search.imageTag</td>
 <td>string</td>
 <td><code>"2.0.0"</code></td>
-<td>The image version of the search container.</td>
+<td>The image tag of the search container.</td>
 </tr>
 <tr>
 <td>search.nodeSelector</td>
 <td>object</td>
 <td><code>{}</code></td>
 <td>Search pod specific nodeSelector.</td>
+</tr>
+<tr>
+<td>search.podAnnotations</td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>Search pod specific annotations.</td>
 </tr>
 <tr>
 <td>search.replicas</td>
@@ -1608,6 +1638,12 @@
 <td>The search service name.</td>
 </tr>
 <tr>
+<td>search.serviceType</td>
+<td>string</td>
+<td><code>"ClusterIP"</code></td>
+<td>The search service type. See service types <a href="https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types">ref</a></td>
+</tr>
+<tr>
 <td>search.tolerations</td>
 <td>list</td>
 <td><code>[]</code></td>
@@ -1625,9 +1661,9 @@
 <p>You may want to override the default memory usage for Neo4J. In particular, if you&rsquo;re just test-driving a deployment and your node exits with status 137, you should set the usage to smaller values:
 <div class="highlight"><pre><span></span><code>config:
   dbms:
-    heap_initial_size: 2Gi
-    heap_max_size: 2Gi
-    pagecache_size: 2Gi
+    heap_initial_size: 1G
+    heap_max_size: 2G
+    pagecache_size: 2G
 </code></pre></div></p>
 <p>With this values file, you can then install Amundsen using Helm 2 with:
 <div class="highlight"><pre><span></span><code>helm install ./templates/helm --values impl/helm/dev/values.yaml

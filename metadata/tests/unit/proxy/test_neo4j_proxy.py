@@ -3,22 +3,22 @@ import textwrap
 import unittest
 from typing import Any, Dict  # noqa: F401
 
+from amundsen_common.models.dashboard import DashboardSummary
 from amundsen_common.models.popular_table import PopularTable
 from amundsen_common.models.table import (Application, Column, Source,
                                           Statistics, Table, Tag, User,
                                           Watermark, ProgrammaticDescription)
 from amundsen_common.models.user import UserSchema
-from amundsen_common.models.dashboard import DashboardSummary
 from mock import MagicMock, patch
 from neo4j.v1 import GraphDatabase
 
 from metadata_service import create_app
 from metadata_service.entity.dashboard_detail import DashboardDetail
+from metadata_service.entity.resource_type import ResourceType
 from metadata_service.entity.tag_detail import TagDetail
 from metadata_service.exception import NotFoundException
 from metadata_service.proxy.neo4j_proxy import Neo4jProxy
 from metadata_service.util import UserResourceRel
-from metadata_service.entity.resource_type import ResourceType
 
 
 class TestNeo4jProxy(unittest.TestCase):
@@ -592,6 +592,7 @@ class TestNeo4jProxy(unittest.TestCase):
                     'cluster_name': 'cluster',
                     'dg_name': 'dashboard_group',
                     'dg_url': 'http://foo.bar/group',
+                    'product': 'foobar',
                     'name': 'dashboard',
                     'url': 'http://foo.bar/dashboard',
                     'description': 'description',
@@ -607,6 +608,7 @@ class TestNeo4jProxy(unittest.TestCase):
                                         cluster='cluster',
                                         group_name='dashboard_group',
                                         group_url='http://foo.bar/group',
+                                        product='foobar',
                                         name='dashboard',
                                         url='http://foo.bar/dashboard',
                                         description='description',
@@ -670,6 +672,7 @@ class TestNeo4jProxy(unittest.TestCase):
                     'cluster_name': 'cluster_name',
                     'uri': 'foo_dashboard://gold.bar/dashboard_id',
                     'url': 'http://www.foo.bar/dashboard_id',
+                    'product': 'foobar',
                     'name': 'dashboard name',
                     'created_timestamp': 123456789,
                     'description': 'description',
@@ -679,6 +682,7 @@ class TestNeo4jProxy(unittest.TestCase):
                     'last_run_timestamp': 987654321,
                     'last_run_state': 'good_state',
                     'updated_timestamp': 123456654321,
+                    'recent_view_count': 100,
                     'owners': [
                         {
                             'employee_type': 'teamMember',
@@ -714,12 +718,31 @@ class TestNeo4jProxy(unittest.TestCase):
                             'tag_type': 'tag_type2'
 
                         }
+                    ],
+                    'charts': [{'name': 'chart1'}, {'name': 'chart2'}],
+                    'queries': [{'name': 'query1'}, {'name': 'query2'}],
+                    'tables': [
+                        {
+                            'database': 'db1',
+                            'name': 'table1',
+                            'description': 'table description 1',
+                            'cluster': 'cluster1',
+                            'schema': 'schema1'
+                        },
+                        {
+                            'database': 'db2',
+                            'name': 'table2',
+                            'description': None,
+                            'cluster': 'cluster2',
+                            'schema': 'schema2'
+                        }
                     ]
                 },
                 {
                     'cluster_name': 'cluster_name',
                     'uri': 'foo_dashboard://gold.bar/dashboard_id',
                     'url': 'http://www.foo.bar/dashboard_id',
+                    'product': 'foobar',
                     'name': 'dashboard name',
                     'created_timestamp': 123456789,
                     'description': None,
@@ -728,14 +751,19 @@ class TestNeo4jProxy(unittest.TestCase):
                     'last_run_timestamp': None,
                     'last_run_state': None,
                     'updated_timestamp': None,
+                    'recent_view_count': 0,
                     'owners': [],
-                    'tags': []
+                    'tags': [],
+                    'charts': [],
+                    'queries': [],
+                    'tables': []
                 }
             ]
             neo4j_proxy = Neo4jProxy(host='DOES_NOT_MATTER', port=0000)
             dashboard = neo4j_proxy.get_dashboard(id='dashboard_id')
             expected = DashboardDetail(uri='foo_dashboard://gold.bar/dashboard_id', cluster='cluster_name',
                                        group_name='group_name', group_url='http://www.group_url.com',
+                                       product='foobar',
                                        name='dashboard name', url='http://www.foo.bar/dashboard_id',
                                        description='description', created_timestamp=123456789,
                                        last_successful_run_timestamp=9876543210,
@@ -753,19 +781,34 @@ class TestNeo4jProxy(unittest.TestCase):
                                                     github_username='test-github2',
                                                     team_name='test_team2', slack_id='test_id2',
                                                     employee_type='teamMember', manager_fullname='')],
-                                       frequent_users=[], chart_names=[], query_names=[], tables=[],
+                                       frequent_users=[], chart_names=['chart1', 'chart2'],
+                                       query_names=['query1', 'query2'],
+                                       tables=[
+                                           PopularTable(database='db1',
+                                                        name='table1',
+                                                        description='table description 1',
+                                                        cluster='cluster1',
+                                                        schema='schema1'),
+                                           PopularTable(database='db2',
+                                                        name='table2',
+                                                        cluster='cluster2',
+                                                        schema='schema2'),
+                                       ],
                                        tags=[Tag(tag_type='tag_type1', tag_name='tag_key1'),
-                                             Tag(tag_type='tag_type2', tag_name='tag_key2')])
+                                             Tag(tag_type='tag_type2', tag_name='tag_key2')],
+                                       recent_view_count=100)
 
             self.assertEqual(expected, dashboard)
 
             dashboard2 = neo4j_proxy.get_dashboard(id='dashboard_id')
             expected2 = DashboardDetail(uri='foo_dashboard://gold.bar/dashboard_id', cluster='cluster_name',
                                         group_name='group_name', group_url='http://www.group_url.com',
-                                        name='dashboard name', url='http://www.foo.bar/dashboard_id', description=None,
+                                        product='foobar', name='dashboard name',
+                                        url='http://www.foo.bar/dashboard_id', description=None,
                                         created_timestamp=123456789, updated_timestamp=None, last_run_timestamp=None,
                                         last_run_state=None, owners=[], frequent_users=[], chart_names=[],
-                                        query_names=[], tables=[], tags=[], last_successful_run_timestamp=None)
+                                        query_names=[], tables=[], tags=[], last_successful_run_timestamp=None,
+                                        recent_view_count=0)
 
             self.assertEqual(expected2, dashboard2)
 
