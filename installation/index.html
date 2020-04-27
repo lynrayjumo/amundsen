@@ -456,10 +456,58 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
     
     <label class="md-nav__link" for="nav-4-2">
-      Deployment
+      Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
       <label class="md-nav__title" for="nav-4-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/index-postgres/" title="How to index the postgres database metadata" class="md-nav__link">
+      How to index the postgres database metadata
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/data-preview-with-superset/" title="How to setup a preview client with Apache Superset" class="md-nav__link">
+      How to setup a preview client with Apache Superset
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Deployment
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1133,7 +1181,15 @@ $ docker-compose -f docker-amundsen-atlas.yml up
  $ python3 setup.py install
  $ python3 example/scripts/sample_data_loader.py
 </code></pre></div></li>
-<li>View UI at <a href="http://localhost:5000"><code>http://localhost:5000</code></a> and try to search <code>test</code>, it should return some result.</li>
+<li>
+<p>View UI at <a href="http://localhost:5000"><code>http://localhost:5000</code></a> and try to search <code>test</code>, it should return some result.
+<img alt="" src="../img/search-page.png" /></p>
+</li>
+<li>
+<p>We could also do an exact matched search for table entity. For example: search <code>test_table1</code> in table field and 
+it return the records that matched.
+<img alt="" src="../img/search-exact-match.png" /></p>
+</li>
 </ol>
 <p><strong>Atlas Note:</strong> Atlas takes some time to boot properly. So you may not be able to see the results immediately 
 after <code>docker-compose up</code> command. 
@@ -1142,7 +1198,8 @@ Atlas would be ready once you&rsquo;ll have the following output in the docker o
 <ol>
 <li>You can verify dummy data has been ingested into Neo4j by by visiting <a href="http://localhost:7474/browser/"><code>http://localhost:7474/browser/</code></a> and run <code>MATCH (n:Table) RETURN n LIMIT 25</code> in the query box. You should see two tables:</li>
 <li><code>hive.test_schema.test_table1</code></li>
-<li><code>dynamo.test_schema.test_table2</code></li>
+<li><code>hive.test_schema.test_table2</code>
+<img alt="" src="../img/neo4j-debug.png" /></li>
 <li>You can verify the data has been loaded into the metadataservice by visiting:</li>
 <li><a href="http://localhost:5000/table_detail/gold/hive/test_schema/test_table1"><code>http://localhost:5000/table_detail/gold/hive/test_schema/test_table1</code></a></li>
 <li><a href="http://localhost:5000/table_detail/gold/dynamo/test_schema/test_table2"><code>http://localhost:5000/table_detail/gold/dynamo/test_schema/test_table2</code></a></li>
@@ -1214,13 +1271,13 @@ Atlas would be ready once you&rsquo;ll have the following output in the docker o
           </a>
         
         
-          <a href="../authentication/oidc/" title="Authentication" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tutorials/index-postgres/" title="How to index the postgres database metadata" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Authentication
+                How to index the postgres database metadata
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -396,10 +396,58 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
     
     <label class="md-nav__link" for="nav-4-2">
-      Deployment
+      Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
       <label class="md-nav__title" for="nav-4-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/index-postgres/" title="How to index the postgres database metadata" class="md-nav__link">
+      How to index the postgres database metadata
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/data-preview-with-superset/" title="How to setup a preview client with Apache Superset" class="md-nav__link">
+      How to setup a preview client with Apache Superset
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Deployment
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1062,8 +1110,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#db2metadataextractor" class="md-nav__link">
-    Db2MetadataExtractor
+  <a href="#mysqlmetadataextractor" class="md-nav__link">
+    MysqlMetadataExtractor
   </a>
   
 </li>
@@ -1498,8 +1546,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#db2metadataextractor" class="md-nav__link">
-    Db2MetadataExtractor
+  <a href="#mysqlmetadataextractor" class="md-nav__link">
+    MysqlMetadataExtractor
   </a>
   
 </li>
@@ -1864,11 +1912,31 @@ to <code>False</code>, and <code>CLUSTER_KEY</code> to what you wish to use as t
 <span class="n">job</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
 </code></pre></div>
 
-<h4 id="db2metadataextractor"><a href="https://github.com/lyft/amundsendatabuilder/blob/master/databuilder/extractor/db2_metadata_extractor.py" title="Db2MetadataExtractor">Db2MetadataExtractor</a><a class="headerlink" href="#db2metadataextractor" title="Permanent link">&para;</a></h4>
-<p>An extractor that extracts table and column metadata including database, schema, table name, table description, column name and column description from a Unix, Windows or Linux Db2 database or BigSQL.</p>
-<p>The <code>where_clause_suffix</code> below should define which schemas you&rsquo;d like to query or those that you would not (see <a href="https://github.com/lyft/amundsendatabuilder/blob/master/example/sample_db2_data_loader.py">the sample data loader</a> for an example).</p>
-<p>The SQL query driving the extraction is defined <a href="https://github.com/lyft/amundsendatabuilder/blob/master/databuilder/extractor/db2_metadata_extractor.py">here</a></p>
+<h4 id="mysqlmetadataextractor"><a href="https://github.com/lyft/amundsendatabuilder/blob/master/databuilder/extractor/mysql_metadata_extractor.py" title="PostgresMetadataExtractor">MysqlMetadataExtractor</a><a class="headerlink" href="#mysqlmetadataextractor" title="Permanent link">&para;</a></h4>
+<p>An extractor that extracts table and column metadata including database, schema, table name, table description, column name and column description from a MYSQL database.</p>
+<p>By default, the MYSQL database name is used as the cluster name. To override this, set <code>USE_CATALOG_AS_CLUSTER_NAME</code>
+to <code>False</code>, and <code>CLUSTER_KEY</code> to what you wish to use as the cluster name.</p>
+<p>The <code>where_clause_suffix</code> below should define which schemas you&rsquo;d like to query.</p>
+<p>The SQL query driving the extraction is defined <a href="https://github.com/lyft/amundsendatabuilder/blob/master/databuilder/extractor/mysql_metadata_extractor.py">here</a></p>
 <div class="highlight"><pre><span></span><code><span class="n">job_config</span> <span class="o">=</span> <span class="n">ConfigFactory</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+    <span class="s1">&#39;extractor.mysql_metadata.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MysqlMetadataExtractor</span><span class="o">.</span><span class="n">WHERE_CLAUSE_SUFFIX_KEY</span><span class="p">):</span> <span class="n">where_clause_suffix</span><span class="p">,</span>
+  <span class="s1">&#39;extractor.mysql_metadata.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MysqlMetadataExtractor</span><span class="o">.</span><span class="n">USE_CATALOG_AS_CLUSTER_NAME</span><span class="p">):</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;extractor.postgres_metadata.extractor.sqlalchemy.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">SQLAlchemyExtractor</span><span class="o">.</span><span class="n">CONN_STRING</span><span class="p">):</span> <span class="n">connection_string</span><span class="p">()})</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">DefaultJob</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">job_config</span><span class="p">,</span>
+                                 <span class="n">task</span><span class="o">=</span><span class="n">DefaultTask</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">MysqlMetadataExtractor</span><span class="p">(),</span> <span class="n">loader</span><span class="o">=</span><span class="n">FsNeo4jCSVLoader</span><span class="p">()),</span>
+                                 <span class="n">publisher</span><span class="o">=</span><span class="n">Neo4jCsvPublisher</span><span class="p">())</span>
+<span class="n">job</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
+
+
+<span class="c1">#### [Db2MetadataExtractor](https://github.com/lyft/amundsendatabuilder/blob/master/databuilder/extractor/db2_metadata_extractor.py &quot;Db2MetadataExtractor&quot;)</span>
+<span class="n">An</span> <span class="n">extractor</span> <span class="n">that</span> <span class="n">extracts</span> <span class="n">table</span> <span class="ow">and</span> <span class="n">column</span> <span class="n">metadata</span> <span class="n">including</span> <span class="n">database</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">table</span> <span class="n">name</span><span class="p">,</span> <span class="n">table</span> <span class="n">description</span><span class="p">,</span> <span class="n">column</span> <span class="n">name</span> <span class="ow">and</span> <span class="n">column</span> <span class="n">description</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">Unix</span><span class="p">,</span> <span class="n">Windows</span> <span class="ow">or</span> <span class="n">Linux</span> <span class="n">Db2</span> <span class="n">database</span> <span class="ow">or</span> <span class="n">BigSQL</span><span class="o">.</span>
+
+<span class="n">The</span> <span class="err">`</span><span class="n">where_clause_suffix</span><span class="err">`</span> <span class="n">below</span> <span class="n">should</span> <span class="n">define</span> <span class="n">which</span> <span class="n">schemas</span> <span class="n">you</span><span class="s1">&#39;d like to query or those that you would not (see [the sample data loader](https://github.com/lyft/amundsendatabuilder/blob/master/example/sample_db2_data_loader.py) for an example).</span>
+
+<span class="n">The</span> <span class="n">SQL</span> <span class="n">query</span> <span class="n">driving</span> <span class="n">the</span> <span class="n">extraction</span> <span class="ow">is</span> <span class="n">defined</span> <span class="p">[</span><span class="n">here</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">lyft</span><span class="o">/</span><span class="n">amundsendatabuilder</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">databuilder</span><span class="o">/</span><span class="n">extractor</span><span class="o">/</span><span class="n">db2_metadata_extractor</span><span class="o">.</span><span class="n">py</span><span class="p">)</span>
+
+<span class="err">```</span><span class="n">python</span>
+<span class="n">job_config</span> <span class="o">=</span> <span class="n">ConfigFactory</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
     <span class="s1">&#39;extractor.db2_metadata.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Db2MetadataExtractor</span><span class="o">.</span><span class="n">WHERE_CLAUSE_SUFFIX_KEY</span><span class="p">):</span> <span class="n">where_clause_suffix</span><span class="p">,</span>
     <span class="s1">&#39;extractor.db2_metadata.extractor.sqlalchemy.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">SQLAlchemyExtractor</span><span class="o">.</span><span class="n">CONN_STRING</span><span class="p">):</span> <span class="n">connection_string</span><span class="p">()})</span>
 <span class="n">job</span> <span class="o">=</span> <span class="n">DefaultJob</span><span class="p">(</span>
