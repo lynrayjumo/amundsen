@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#doc" tabindex="0" class="md-skip">
+      <a href="#documentation" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -418,8 +418,8 @@
 
 
   <li class="md-nav__item">
-    <a href="tutorials/index-postgres/" title="How to index the postgres database metadata" class="md-nav__link">
-      How to index the postgres database metadata
+    <a href="tutorials/index-postgres/" title="How to index metadata for real life databases" class="md-nav__link">
+      How to index metadata for real life databases
     </a>
   </li>
 
@@ -444,6 +444,18 @@
   <li class="md-nav__item">
     <a href="tutorials/user-profiles/" title="How to setup user profiles" class="md-nav__link">
       How to setup user profiles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="databuilder/docs/dashboard_ingestion_guide/" title="How to ingest Dashboard" class="md-nav__link">
+      How to ingest Dashboard
     </a>
   </li>
 
@@ -976,6 +988,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="databuilder/docs/dashboard_ingestion_guide/" title="Dashboard Ingestion guide" class="md-nav__link">
+      Dashboard Ingestion guide
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1104,7 +1128,7 @@ Users could either load the data with <a href="https://github.com/lyft/amundsend
 or with an <a href="https://github.com/lyft/amundsendatabuilder/tree/master/example/dags">Airflow DAG</a> importing the library.</li>
 <li><a href="https://github.com/lyft/amundsencommon">amundsencommon</a>: Amundsen Common library holds common codes among microservices in Amundsen.</li>
 </ul>
-<h2 id="doc">Doc<a class="headerlink" href="#doc" title="Permanent link">&para;</a></h2>
+<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://lyft.github.io/amundsen/">https://lyft.github.io/amundsen/</a></li>
 </ul>
@@ -1148,7 +1172,8 @@ Use the button in our <a href="https://github.com/lyft/amundsen#readme">header</
 <h2 id="supported-connectors">Supported connectors<a class="headerlink" href="#supported-connectors" title="Permanent link">&para;</a></h2>
 <p>Amundsen supports two kinds of &ldquo;nodes&rdquo; in its graph today:
 - Tables (from Databases)
-- People (from HR systems)</p>
+- People (from HR systems)
+- Dashboards</p>
 <p>Amundsen can connect to any database that provides <code>dbapi</code> or <code>sql_alchemy</code> interface (which most DBs provide).
 The databases we see most frequently used in the community are:
 - Hive and anything that works with Hive metastore (Spark SQL, Presto, Athena, etc.)
@@ -1170,12 +1195,12 @@ The databases we see most frequently used in the community are:
 </ul>
 <h2 id="talks">Talks<a class="headerlink" href="#talks" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Disrupting Data Discovery {<a href="https://www.slideshare.net/taofung/strata-sf-amundsen-presentation">slides</a>, <a href="https://www.youtube.com/watch?v=m1B-ptm0Rrw">video</a>} (Strata SF, March 2019)</li>
+<li>Disrupting Data Discovery {<a href="https://www.slideshare.net/taofung/strata-sf-amundsen-presentation">slides</a>, <a href="https://www.youtube.com/watch?v=m1B-ptm0Rrw">recording</a>} (Strata SF, March 2019)</li>
 <li>Amundsen: A Data Discovery Platform from Lyft {<a href="https://www.slideshare.net/taofung/data-council-sf-amundsen-presentation">slides</a>} (Data Council SF, April 2019)</li>
 <li>Disrupting Data Discovery {<a href="https://www.slideshare.net/markgrover/disrupting-data-discovery">slides</a>} (Strata London, May 2019)</li>
-<li>ING Data Analytics Platform (Amundsen is mentioned) {<a href="https://static.sched.com/hosted_files/kccnceu19/65/ING%20Data%20Analytics%20Platform.pdf">slides</a>, <a href="https://www.youtube.com/watch?v=8cE9ppbnDPs&amp;t=465">video</a> } (Kubecon Barcelona, May 2019)</li>
-<li>Disrupting Data Discovery {<a href="https://www.slideshare.net/PhilippeMizrahi/meetup-sf-amundsen">slides</a>, <a href="https://www.youtube.com/watch?v=NgeCOVjSJ7A">video</a>} (Making Big Data Easy SF, May 2019)</li>
-<li>Disrupting Data Discovery {<a href="https://www.slideshare.net/TamikaTannis/neo4j-graphtour-santa-monica-2019-amundsen-presentation-173073727">slides</a>, <a href="https://www.youtube.com/watch?v=Gr3-RfWn49A">video</a>} (Neo4j Graph Tour Santa Monica, September 2019)</li>
+<li>ING Data Analytics Platform (Amundsen is mentioned) {<a href="https://static.sched.com/hosted_files/kccnceu19/65/ING%20Data%20Analytics%20Platform.pdf">slides</a>, <a href="https://www.youtube.com/watch?v=8cE9ppbnDPs&amp;t=465">recording</a> } (Kubecon Barcelona, May 2019)</li>
+<li>Disrupting Data Discovery {<a href="https://www.slideshare.net/PhilippeMizrahi/meetup-sf-amundsen">slides</a>, <a href="https://www.youtube.com/watch?v=NgeCOVjSJ7A">recording</a>} (Making Big Data Easy SF, May 2019)</li>
+<li>Disrupting Data Discovery {<a href="https://www.slideshare.net/TamikaTannis/neo4j-graphtour-santa-monica-2019-amundsen-presentation-173073727">slides</a>, <a href="https://www.youtube.com/watch?v=Gr3-RfWn49A">recording</a>} (Neo4j Graph Tour Santa Monica, September 2019)</li>
 <li>Disrupting Data Discovery {<a href="https://www.slideshare.net/secret/56EPbcvswqyH90">slides</a>} (IDEAS SoCal AI &amp; Data Science Conference, Oct 2019)</li>
 <li>Data Discovery with Amundsen by <a href="https://twitter.com/radialmind">Gerard Toonstra</a> from Coolblue {<a href="https://docs.google.com/presentation/d/1rkrP8ZobkLPZbwisrLWTdPN5I52SgVGM1eqAFDJXj2A/edit?usp=sharing">slides</a>} and {<a href="https://www.youtube.com/watch?v=T54EO1MuE7I&amp;list=PLqYhGsQ9iSEq7fDvXcd67iVzx5nsf9xnK&amp;index=17">talk</a>}  (BigData Vilnius 2019)</li>
 <li>Towards Enterprise Grade Data Discovery and Data Lineage with Apache Atlas and Amundsen by <a href="https://github.com/verdan">Verdan Mahmood</a> and Marek Wiewiorka from ING {<a href="https://docs.google.com/presentation/d/1FixTTNd1dt_f3PAKhL1KLOeOLsIQq0iFvQA6qlpjIg0/edit#slide=id.p1">slides</a>, <a href="https://bigdatatechwarsaw.eu/agenda/">talk</a>} (Big Data Technology Warsaw Summit 2020)</li>
@@ -1191,8 +1216,15 @@ The databases we see most frequently used in the community are:
 <li><a href="https://towardsdatascience.com/a-data-engineers-perspective-on-data-democratization-a8aed10f4253?source=friends_link&amp;sk=63638570d03e4145265932c12af33f9d">A Data Engineer’s Perspective On Data Democratization</a></li>
 </ul>
 <h2 id="community-meetings">Community meetings<a class="headerlink" href="#community-meetings" title="Permanent link">&para;</a></h2>
-<p>Join slack to find out about our next virtual community meetings. Notes:
-- <a href="https://docs.google.com/document/d/1MT3qd_YjFiA17en94IEZcWaEgjdcaLhhZb-mX1UyWF8/edit#">2020/01/23</a> {<a href="https://www.youtube.com/watch?v=HV6ChWv4-ZQ">video</a>}
+<p>Community meetings are held on the first Thursday of every month at 9 AM Pacific, Noon Eastern, 6 PM Central European Time <a href="https://meet.google.com/mqz-ndck-jmj">Link to join</a></p>
+<h3 id="upcoming-meetings">Upcoming meetings<a class="headerlink" href="#upcoming-meetings" title="Permanent link">&para;</a></h3>
+<ul>
+<li>2020/06/04 at 9 AM Pacific. <a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">Notes</a></li>
+</ul>
+<h3 id="past-meetings">Past meetings<a class="headerlink" href="#past-meetings" title="Permanent link">&para;</a></h3>
+<p>All notes <a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">here</a>.
+- <a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">2020/05/07</a> {<a href="https://youtu.be/gs9KYxMjmGk">recording</a>}
+- <a href="https://docs.google.com/document/d/1MT3qd_YjFiA17en94IEZcWaEgjdcaLhhZb-mX1UyWF8/edit#">2020/01/23</a> {<a href="https://www.youtube.com/watch?v=HV6ChWv4-ZQ">recording</a>}
 - <a href="https://docs.google.com/document/d/11CLWhyNHlNoOxs6Ee29UJz0m8yI3Xiw4tUNTFGx_vy4/edit#heading=h.8d2zgr1chrra">2019/11/05</a>
 - <a href="https://docs.google.com/document/d/1l2yIpoMmTGY022yuDHWWkSJVSuK25dYlwX0GWff6eQg/edit#">2019/09/05</a>
 - <a href="https://docs.google.com/document/d/1JzoLlXUGrwnGirlGUmNCHFhzMXYcR2KrUokLsRHKacs/edit#heading=h.3nxnevt7nz9">2019/07/30</a></p>

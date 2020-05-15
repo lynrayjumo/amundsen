@@ -1,131 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://lyft.github.io/amundsen/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/architecture/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/developer_guide/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/installation/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/tutorials/index-postgres/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/tutorials/data-preview-with-superset/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/tutorials/user-profiles/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://lyft.github.io/amundsen/databuilder/docs/dashboard_ingestion_guide/</loc>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/authentication/oidc/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/installation-aws-ecs/aws-ecs-deployment/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/k8s_install/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/docs/application_config/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/docs/configuration/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/docs/flask_config/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/docs/examples/superset_preview_client/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/docs/developer_guide/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/docs/installation/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/frontend/docs/recommended_practices/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/search/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/search/docs/atlas-search/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/metadata/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/metadata/docs/configurations/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/metadata/docs/structure/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/metadata/docs/proxy/atlas_proxy/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/metadata/docs/proxy/atlas/popular_tables/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/metadata/docs/proxy/gremlin/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/metadata/docs/proxy/neptune/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/databuilder/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/databuilder/docs/models/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://lyft.github.io/amundsen/databuilder/docs/dashboard_ingestion_guide/</loc>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/common/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/faq/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://lyft.github.io/amundsen/roadmap/</loc>
-     <lastmod>2020-05-01</lastmod>
+     <lastmod>2020-05-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

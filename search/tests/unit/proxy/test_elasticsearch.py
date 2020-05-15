@@ -284,72 +284,6 @@ class TestElasticsearchProxy(unittest.TestCase):
                                  vars(expected.results[i]),
                                  "Search result doesn't match with expected result!")
 
-    @patch('search_service.proxy.elasticsearch.ElasticsearchProxy._search_helper')
-    def test_search_match_with_field(self,
-                                     mock_search: MagicMock) -> None:
-
-        mock_search.return_value = SearchResult(total_results=1,
-                                                results=[self.mock_result3])
-
-        expected = SearchResult(total_results=1,
-                                results=[Table(name='test_table3',
-                                               key='test_key3',
-                                               description='test_description3',
-                                               cluster='gold',
-                                               database='test_db3',
-                                               schema='test_schema3',
-                                               column_names=['test_col1', 'test_col2'],
-                                               tags=[self.mock_tag],
-                                               badges=[self.mock_badge],
-                                               last_updated_timestamp=1527283287)])
-
-        resp = self.es_proxy.fetch_table_search_results_with_field(query_term='test_query_term',
-                                                                   field_name='tag',
-                                                                   field_value='match')
-        self.assertEquals(resp.total_results, expected.total_results)
-
-        self.assertDictEqual(vars(resp.results[0]),
-                             vars(expected.results[0]),
-                             "Search result doesn't match with expected result!")
-
-    @patch('search_service.proxy.elasticsearch.ElasticsearchProxy._search_helper')
-    def test_search_not_match_with_field(self,
-                                         mock_search: MagicMock) -> None:
-
-        mock_search.return_value = SearchResult(total_results=0,
-                                                results=[])
-
-        resp = self.es_proxy.fetch_table_search_results_with_field(query_term='test_query_term',
-                                                                   field_name='tag',
-                                                                   field_value='match')
-        self.assertEquals(resp.total_results, 0)
-
-    @patch('search_service.proxy.elasticsearch.ElasticsearchProxy._search_wildcard_helper')
-    def test_search_regex_match_field(self,
-                                      mock_search: MagicMock) -> None:
-        mock_search.return_value = SearchResult(total_results=1,
-                                                results=[self.mock_result3])
-
-        expected = SearchResult(total_results=1,
-                                results=[Table(name='test_table3',
-                                               key='test_key3',
-                                               description='test_description3',
-                                               cluster='gold',
-                                               database='test_db3',
-                                               schema='test_schema3',
-                                               column_names=['test_col1', 'test_col2'],
-                                               tags=[self.mock_tag],
-                                               badges=[self.mock_badge],
-                                               last_updated_timestamp=1527283287)])
-        resp = self.es_proxy.fetch_table_search_results_with_field(query_term='test_query_term',
-                                                                   field_name='tag',
-                                                                   field_value='*match')
-        self.assertEquals(resp.total_results, expected.total_results)
-
-        self.assertDictEqual(vars(resp.results[0]),
-                             vars(expected.results[0]),
-                             "Search result doesn't match with expected result!")
-
     @patch('elasticsearch_dsl.Search.execute')
     def test_search_table_filter(self, mock_search: MagicMock) -> None:
         mock_results = MagicMock()
@@ -529,6 +463,7 @@ class TestElasticsearchProxy(unittest.TestCase):
     def test_create_document_with_no_data(self) -> None:
         expected = ''
         result = self.es_proxy.create_document(data=None, index='table_search_index')
+        print('result: {}'.format(result))
         self.assertEquals(expected, result)
 
     @patch('uuid.uuid4')
@@ -542,11 +477,12 @@ class TestElasticsearchProxy(unittest.TestCase):
                   schema='test_schema', description='A table for something',
                   key='snowflake://blue.test_schema/bank_accounts',
                   last_updated_timestamp=0, name='bank_accounts', tags=[], badges=self.mock_empty_badge,
-                  column_descriptions=['desc']),
+                  column_descriptions=['desc'], schema_description='schema description 1'),
             Table(cluster='blue', column_names=['5', '6'], database='snowflake',
                   schema='test_schema', description='A table for lots of things!',
                   key='snowflake://blue.test_schema/bitcoin_wallets',
-                  last_updated_timestamp=0, name='bitcoin_wallets', tags=[], badges=self.mock_empty_badge)
+                  last_updated_timestamp=0, name='bitcoin_wallets', tags=[], badges=self.mock_empty_badge,
+                  schema_description='schema description 2')
         ]
         expected_data = [
             {
@@ -569,7 +505,8 @@ class TestElasticsearchProxy(unittest.TestCase):
                 'name': 'bank_accounts',
                 'tags': [],
                 'badges': [],
-                'total_usage': 0
+                'total_usage': 0,
+                'schema_description': 'schema description 1',
             },
             {
                 'index': {
@@ -591,7 +528,8 @@ class TestElasticsearchProxy(unittest.TestCase):
                 'name': 'bitcoin_wallets',
                 'tags': [],
                 'badges': [],
-                'total_usage': 0
+                'total_usage': 0,
+                'schema_description': 'schema description 2',
             }
         ]
         mock_elasticsearch.bulk.return_value = {'errors': False}
@@ -618,7 +556,8 @@ class TestElasticsearchProxy(unittest.TestCase):
             Table(cluster='blue', column_names=['5', '6'], database='snowflake',
                   schema='test_schema', description='A table for lots of things!',
                   key=table_key, last_updated_timestamp=0, name='bitcoin_wallets',
-                  tags=[], column_descriptions=['hello'], badges=self.mock_empty_badge)
+                  tags=[], column_descriptions=['hello'], badges=self.mock_empty_badge,
+                  schema_description='schema description 1')
         ]
         expected_data = [
             {
@@ -642,7 +581,8 @@ class TestElasticsearchProxy(unittest.TestCase):
                     'name': 'bitcoin_wallets',
                     'tags': [],
                     'badges': [],
-                    'total_usage': 0
+                    'total_usage': 0,
+                    'schema_description': 'schema description 1',
                 }
             }
         ]
