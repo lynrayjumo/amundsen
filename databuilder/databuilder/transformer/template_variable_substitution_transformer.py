@@ -13,9 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 class TemplateVariableSubstitutionTransformer(Transformer):
     """
-    Add/Replace field in Dict by string.format based on given template and provide record Dict as a template parameter
-    https://docs.python.org/3.4/library/string.html#string.Formatter.format
-
+    Transforms dictionary into model
     """
 
     def init(self, conf):

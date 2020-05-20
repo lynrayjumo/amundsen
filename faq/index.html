@@ -445,7 +445,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../databuilder/docs/dashboard_ingestion_guide/" title="How to ingest Dashboard" class="md-nav__link">
+    <a href="../databuilder/docs/dashboard_ingestion_guide.md" title="How to ingest Dashboard" class="md-nav__link">
       How to ingest Dashboard
     </a>
   </li>
@@ -985,7 +985,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../databuilder/docs/dashboard_ingestion_guide/" title="Dashboard Ingestion guide" class="md-nav__link">
+    <a href="../databuilder/docs/dashboard_ingestion_guide.md" title="Dashboard Ingestion guide" class="md-nav__link">
       Dashboard Ingestion guide
     </a>
   </li>
@@ -1097,6 +1097,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-are-the-prerequisites-to-use-apache-atlas-as-backend-for-amundsen" class="md-nav__link">
+    What are the prerequisites to use Apache Atlas as backend for Amundsen?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-migrate-from-amundsen-1x-2x" class="md-nav__link">
     How to migrate from Amundsen 1.x -&gt; 2.x?
   </a>
@@ -1174,6 +1181,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-are-the-prerequisites-to-use-apache-atlas-as-backend-for-amundsen" class="md-nav__link">
+    What are the prerequisites to use Apache Atlas as backend for Amundsen?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-migrate-from-amundsen-1x-2x" class="md-nav__link">
     How to migrate from Amundsen 1.x -&gt; 2.x?
   </a>
@@ -1218,6 +1232,10 @@
 <li>It has support for push based due to its many plugins</li>
 <li>The free version of Neo4j does not have authorization support(Enterprise version does). Your question should actually be why use &ldquo;neo4j over janusgraph&rdquo; cause that is the right level of comparison. Atlas adds a whole bunch on top of the graph database.</li>
 </ol>
+<h2 id="what-are-the-prerequisites-to-use-apache-atlas-as-backend-for-amundsen">What are the prerequisites to use Apache Atlas as backend for Amundsen?<a class="headerlink" href="#what-are-the-prerequisites-to-use-apache-atlas-as-backend-for-amundsen" title="Permanent link">&para;</a></h2>
+<p>To run Amundsen with Atlas, latest versions of following components should be used:
+1. <a href="https://github.com/apache/atlas/">Apache Atlas</a> - built from <code>master</code> branch. Ref <a href="https://github.com/apache/atlas/commit/103e867cc126ddb84e64bf262791a01a55bee6e5"><code>103e867cc126ddb84e64bf262791a01a55bee6e5</code></a> (or higher).
+2. <a href="https://pypi.org/project/amundsenatlastypes/">amundsenatlastypes</a> - library for installing Atlas entity definitions specific to Amundsen integration. Version <code>1.1.0</code> (or higher).</p>
 <h2 id="how-to-migrate-from-amundsen-1x-2x">How to migrate from Amundsen 1.x -&gt; 2.x?<a class="headerlink" href="#how-to-migrate-from-amundsen-1x-2x" title="Permanent link">&para;</a></h2>
 <p>v2.0 renames a handful of fields in the services to be more consistent. Unfortunately one side effect is that the 2.0 versions of the services will need to be deployed simultaneously, as they are not interoperable with the 1.x versions.</p>
 <p>Additionally, some indexed field names in the elasticsearch document change as well, so if you&rsquo;re using elasticsearch, you&rsquo;ll need to republish Elasticsearch index via Databuilder job.</p>

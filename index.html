@@ -454,7 +454,7 @@
 
 
   <li class="md-nav__item">
-    <a href="databuilder/docs/dashboard_ingestion_guide/" title="How to ingest Dashboard" class="md-nav__link">
+    <a href="databuilder/docs/dashboard_ingestion_guide.md" title="How to ingest Dashboard" class="md-nav__link">
       How to ingest Dashboard
     </a>
   </li>
@@ -994,7 +994,7 @@
 
 
   <li class="md-nav__item">
-    <a href="databuilder/docs/dashboard_ingestion_guide/" title="Dashboard Ingestion guide" class="md-nav__link">
+    <a href="databuilder/docs/dashboard_ingestion_guide.md" title="Dashboard Ingestion guide" class="md-nav__link">
       Dashboard Ingestion guide
     </a>
   </li>
@@ -1169,18 +1169,44 @@ Use the button in our <a href="https://github.com/lyft/amundsen#readme">header</
 <p>Please visit the Amundsen installation documentation for a <a href="https://github.com/lyft/amundsen/blob/master/docs/installation.md#bootstrap-a-default-version-of-amundsen-using-docker">quick start</a> to bootstrap a default version of Amundsen with dummy data.</p>
 <h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h2>
 <p>Please visit <a href="https://github.com/lyft/amundsen/blob/master/docs/architecture.md#architecture">Architecture</a> for Amundsen architecture overview.</p>
-<h2 id="supported-connectors">Supported connectors<a class="headerlink" href="#supported-connectors" title="Permanent link">&para;</a></h2>
-<p>Amundsen supports two kinds of &ldquo;nodes&rdquo; in its graph today:
-- Tables (from Databases)
-- People (from HR systems)
-- Dashboards</p>
-<p>Amundsen can connect to any database that provides <code>dbapi</code> or <code>sql_alchemy</code> interface (which most DBs provide).
-The databases we see most frequently used in the community are:
-- Hive and anything that works with Hive metastore (Spark SQL, Presto, Athena, etc.)
-- BigQuery
-- PostgreSQL and anything that uses the same interface (Redshift)
-- Snowflake
-- Amazon Glue and anything built over it (like Databricks Delta - which is a work in progress).</p>
+<h2 id="supported-entities">Supported Entities<a class="headerlink" href="#supported-entities" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Tables (from Databases)</li>
+<li>People (from HR systems)</li>
+<li>Dashboards</li>
+</ul>
+<h2 id="supported-integrations">Supported Integrations<a class="headerlink" href="#supported-integrations" title="Permanent link">&para;</a></h2>
+<h3 id="table-connectors">Table Connectors<a class="headerlink" href="#table-connectors" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://aws.amazon.com/athena/">Amazon Athena</a></li>
+<li><a href="https://aws.amazon.com/glue/">Amazon Glue</a> and anything built over it (like Databricks Delta - which is a work in progress).</li>
+<li><a href="https://aws.amazon.com/redshift/">Amazon Redshift</a></li>
+<li><a href="https://cassandra.apache.org/">Apache Cassandra</a></li>
+<li><a href="https://druid.apache.org/">Apache Druid</a></li>
+<li><a href="https://hive.apache.org/">Apache Hive</a></li>
+<li>CSV</li>
+<li><a href="https://cloud.google.com/bigquery">Google BigQuery</a></li>
+<li><a href="https://www.ibm.com/analytics/db2">IBM DB2</a></li>
+<li><a href="https://www.microsoft.com/en-us/sql-server/default.aspx">Microsoft SQL Server</a></li>
+<li><a href="https://www.mysql.com/">MySQL</a></li>
+<li><a href="https://www.oracle.com/index.html">Oracle</a> (through dbapi or sql_alchemy)</li>
+<li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+<li><a href="https://prestosql.io/">Presto</a></li>
+<li><a href="https://www.snowflake.com/">Snowflake</a></li>
+</ul>
+<p>Amundsen can also connect to any database that provides <code>dbapi</code> or <code>sql_alchemy</code> interface (which most DBs provide).</p>
+<h3 id="dashboard-connectors">Dashboard Connectors<a class="headerlink" href="#dashboard-connectors" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://mode.com/">Mode Analytics</a></li>
+</ul>
+<h3 id="etl-orchestration-integrations">ETL Orchestration Integrations<a class="headerlink" href="#etl-orchestration-integrations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://airflow.apache.org/">Apache Airflow</a></li>
+</ul>
+<h3 id="bi-viz-tool-integrations">BI Viz Tool Integrations<a class="headerlink" href="#bi-viz-tool-integrations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://superset.incubator.apache.org/">Apache Superset</a></li>
+</ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>Please visit <a href="https://github.com/lyft/amundsen/blob/master/docs/installation.md">Installation guideline</a> on how to install Amundsen.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
@@ -1214,6 +1240,8 @@ The databases we see most frequently used in the community are:
 <li><a href="https://www.infoq.com/presentations/data-engineering-pipelines-warehouses/">Future of Data Engineering</a></li>
 <li><a href="https://www.oreilly.com/radar/governance-and-discovery/">Governance and Discovery</a></li>
 <li><a href="https://towardsdatascience.com/a-data-engineers-perspective-on-data-democratization-a8aed10f4253?source=friends_link&amp;sk=63638570d03e4145265932c12af33f9d">A Data Engineer’s Perspective On Data Democratization</a></li>
+<li><a href="https://medium.com/@torokyle/data-discovery-in-2020-3c907383caa0">Data Discovery in 2020</a></li>
+<li><a href="https://graphaware.com/graphaware/2020/02/17/graph-technology-landscape-2020.html">Graph Technology Landscape 2020</a></li>
 </ul>
 <h2 id="community-meetings">Community meetings<a class="headerlink" href="#community-meetings" title="Permanent link">&para;</a></h2>
 <p>Community meetings are held on the first Thursday of every month at 9 AM Pacific, Noon Eastern, 6 PM Central European Time <a href="https://meet.google.com/mqz-ndck-jmj">Link to join</a></p>
@@ -1222,12 +1250,14 @@ The databases we see most frequently used in the community are:
 <li>2020/06/04 at 9 AM Pacific. <a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">Notes</a></li>
 </ul>
 <h3 id="past-meetings">Past meetings<a class="headerlink" href="#past-meetings" title="Permanent link">&para;</a></h3>
-<p>All notes <a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">here</a>.
-- <a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">2020/05/07</a> {<a href="https://youtu.be/gs9KYxMjmGk">recording</a>}
-- <a href="https://docs.google.com/document/d/1MT3qd_YjFiA17en94IEZcWaEgjdcaLhhZb-mX1UyWF8/edit#">2020/01/23</a> {<a href="https://www.youtube.com/watch?v=HV6ChWv4-ZQ">recording</a>}
-- <a href="https://docs.google.com/document/d/11CLWhyNHlNoOxs6Ee29UJz0m8yI3Xiw4tUNTFGx_vy4/edit#heading=h.8d2zgr1chrra">2019/11/05</a>
-- <a href="https://docs.google.com/document/d/1l2yIpoMmTGY022yuDHWWkSJVSuK25dYlwX0GWff6eQg/edit#">2019/09/05</a>
-- <a href="https://docs.google.com/document/d/1JzoLlXUGrwnGirlGUmNCHFhzMXYcR2KrUokLsRHKacs/edit#heading=h.3nxnevt7nz9">2019/07/30</a></p>
+<ul>
+<li><a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">2020/05/07</a> {<a href="https://youtu.be/gs9KYxMjmGk">recording</a>}</li>
+<li><a href="https://docs.google.com/document/d/1MT3qd_YjFiA17en94IEZcWaEgjdcaLhhZb-mX1UyWF8/edit#">2020/01/23</a> {<a href="https://www.youtube.com/watch?v=HV6ChWv4-ZQ">recording</a>}</li>
+<li><a href="https://docs.google.com/document/d/11CLWhyNHlNoOxs6Ee29UJz0m8yI3Xiw4tUNTFGx_vy4/edit#heading=h.8d2zgr1chrra">2019/11/05</a></li>
+<li><a href="https://docs.google.com/document/d/1l2yIpoMmTGY022yuDHWWkSJVSuK25dYlwX0GWff6eQg/edit#">2019/09/05</a></li>
+<li><a href="https://docs.google.com/document/d/1JzoLlXUGrwnGirlGUmNCHFhzMXYcR2KrUokLsRHKacs/edit#heading=h.3nxnevt7nz9">2019/07/30</a></li>
+</ul>
+<p>All notes <a href="https://docs.google.com/document/d/1bsJWNt1GBFmV-aRbHFuYgMFnMgIIvAmbhsvDatb0Vis">here</a>.</p>
 <h2 id="who-uses-amundsen">Who uses Amundsen?<a class="headerlink" href="#who-uses-amundsen" title="Permanent link">&para;</a></h2>
 <p>Here is the list of organizations that are using Amundsen today. If your organization uses Amundsen, please file a PR and update this list.</p>
 <p>Currently <strong>officially</strong> using Amundsen:</p>

@@ -13,8 +13,7 @@ def mock_proxy_results() -> Table:
                  column_names=['col1', 'col2'],
                  tags=[Tag(tag_name='tag')],
                  badges=[Tag(tag_name='badge1')],
-                 last_updated_timestamp=1568324871,
-                 schema_description='schema description')
+                 last_updated_timestamp=1568324871)
 
 
 def mock_json_response() -> dict:
@@ -30,7 +29,6 @@ def mock_json_response() -> dict:
         "tags": [{'tag_name': 'tag'}],
         "badges": [{'tag_name': 'badge1'}],
         "last_updated_timestamp": 1568324871,
-        "schema_description": 'schema description',
     }
 
 
@@ -47,5 +45,4 @@ def default_json_response() -> dict:
         "tags": None,
         "badges": None,
         "last_updated_timestamp": 0,
-        "schema_description": None,
     }
