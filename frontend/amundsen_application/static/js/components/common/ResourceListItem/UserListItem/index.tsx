@@ -13,10 +13,6 @@ export interface UserListItemProps {
 }
 
 class UserListItem extends React.Component<UserListItemProps, {}> {
-  constructor(props) {
-    super(props);
-  }
-
   getLink = () => {
     const { user, logging } = this.props;
     return `/user/${user.user_id}?index=${logging.index}&source=${logging.source}`;
@@ -42,11 +38,11 @@ class UserListItem extends React.Component<UserListItemProps, {}> {
     const { user } = this.props;
     const userInfo = this.renderUserInfo(user);
     return (
-      <li className="list-group-item">
+      <li className="list-group-item clickable">
         <Link className="resource-list-item user-list-item" to={ this.getLink() }>
           <div className="resource-info">
             <Avatar name={ user.display_name } size={ 24 } round={ true } />
-            <div className="resource-info-text">
+            <div className="resource-info-text my-auto">
               <div className="resource-name title-2">
                 { user.display_name }
               </div>

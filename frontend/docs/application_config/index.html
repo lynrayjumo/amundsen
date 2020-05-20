@@ -447,7 +447,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../databuilder/docs/dashboard_ingestion_guide.md" title="How to ingest Dashboard" class="md-nav__link">
+    <a href="../../../databuilder/docs/dashboard_ingestion_guide/" title="How to ingest Dashboard" class="md-nav__link">
       How to ingest Dashboard
     </a>
   </li>
@@ -666,9 +666,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#indexing-optional-resources" class="md-nav__link">
+    Indexing Optional Resources
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#index-users" class="md-nav__link">
     Index Users
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-dashboards" class="md-nav__link">
+    Index Dashboards
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -709,14 +729,9 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#table-configuration" class="md-nav__link">
-    Table Configuration
+  <a href="#supported-sources" class="md-nav__link">
+    Supported Sources
   </a>
   
     <nav class="md-nav">
@@ -733,6 +748,11 @@
   <a href="#display-names" class="md-nav__link">
     Display Names
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1161,7 +1181,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../databuilder/docs/dashboard_ingestion_guide.md" title="Dashboard Ingestion guide" class="md-nav__link">
+    <a href="../../../databuilder/docs/dashboard_ingestion_guide/" title="Dashboard Ingestion guide" class="md-nav__link">
       Dashboard Ingestion guide
     </a>
   </li>
@@ -1293,9 +1313,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#indexing-optional-resources" class="md-nav__link">
+    Indexing Optional Resources
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#index-users" class="md-nav__link">
     Index Users
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-dashboards" class="md-nav__link">
+    Index Dashboards
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1336,14 +1376,9 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#table-configuration" class="md-nav__link">
-    Table Configuration
+  <a href="#supported-sources" class="md-nav__link">
+    Supported Sources
   </a>
   
     <nav class="md-nav">
@@ -1360,6 +1395,11 @@
   <a href="#display-names" class="md-nav__link">
     Display Names
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1427,7 +1467,7 @@
 <li>Set the the <code>logoPath</code> key on the  to the location of your image.</li>
 </ol>
 <h2 id="date">Date<a class="headerlink" href="#date" title="Permanent link">&para;</a></h2>
-<p>This config allows you to specify various date formats across the app. There are three date formats in use shown below. These correspond to the <code>formatDate</code>, <code>formatDateTimeShort</code> and <code>formatDateTimeLong</code> utility functions. </p>
+<p>This config allows you to specify various date formats across the app. There are three date formats in use shown below. These correspond to the <code>formatDate</code>, <code>formatDateTimeShort</code> and <code>formatDateTimeLong</code> utility functions.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>default: &#39;MMM DD, YYYY&#39;
@@ -1439,9 +1479,14 @@ dateTimeLong: &#39;MMMM Do YYYY [at] h:mm:ss a&#39;
 <p>Reference for formatting: <a href="https://devhints.io/datetime#momentjs-format">https://devhints.io/datetime#momentjs-format</a></p>
 <h2 id="google-analytics">Google Analytics<a class="headerlink" href="#google-analytics" title="Permanent link">&para;</a></h2>
 <p><em>TODO: Please add doc</em></p>
-<h2 id="index-users">Index Users<a class="headerlink" href="#index-users" title="Permanent link">&para;</a></h2>
-<p>In Amundsen, users themselves are data resources and user metadata helps to facilitate network based discovery. When users are indexed they will show up in search results, and selecting a user surfaces a profile page that displays that user&rsquo;s relationships with different data resources.</p>
+<h2 id="indexing-optional-resources">Indexing Optional Resources<a class="headerlink" href="#indexing-optional-resources" title="Permanent link">&para;</a></h2>
+<p>In Amundsen, we currently support indexing other optional resources beyond tables.</p>
+<h3 id="index-users">Index Users<a class="headerlink" href="#index-users" title="Permanent link">&para;</a></h3>
+<p>Users themselves are data resources and user metadata helps to facilitate network based discovery. When users are indexed they will show up in search results, and selecting a user surfaces a profile page that displays that user&rsquo;s relationships with different data resources.</p>
 <p>After ingesting user metadata into the search and metadata services, set <code>IndexUsersConfig.enabled</code> to <code>true</code> on the application configuration to display the UI for the aforementioned features.</p>
+<h3 id="index-dashboards">Index Dashboards<a class="headerlink" href="#index-dashboards" title="Permanent link">&para;</a></h3>
+<p>Introducing dashboards into Amundsen allows users to discovery data analysis that has been already done. When dashboards are indexed they will show up in search results, and selecting a dashboard surfaces a page where users can explore dashboard metadata.</p>
+<p>After ingesting dashboard metadata into the search and metadata services, set <code>IndexDashboardsConfig.enabled</code> to <code>true</code> on the application configuration to display the UI for the aforementioned features.</p>
 <h2 id="mail-client-features">Mail Client Features<a class="headerlink" href="#mail-client-features" title="Permanent link">&para;</a></h2>
 <p>Amundsen has two features that leverage the custom mail client &ndash; the feedback tool and notifications.</p>
 <p>As these are optional features, our <code>MailClientFeaturesConfig</code> can be used to hide/display any UI related to these features:
@@ -1456,22 +1501,23 @@ client, please see this <a href="../flask_config/#mail-client-features">entry</a
 <h3 id="base-configuration">Base Configuration<a class="headerlink" href="#base-configuration" title="Permanent link">&para;</a></h3>
 <p>All resource configurations must match or extend the <code>BaseResourceConfig</code>. This configuration supports the following options:
 1. <code>displayName</code>: The name displayed throughout the application to refer to this resource type.
-2. <code>filterCategories</code>: An optional <code>FilterConfig</code> object. When set for a given resource, that resource will display filter options in the search page UI.</p>
+2. <code>filterCategories</code>: An optional <code>FilterConfig</code> object. When set for a given resource, that resource will display filter options in the search page UI.
+3. <code>supportedSources</code>: An optional <code>SourcesConfig</code> object.</p>
 <h4 id="filter-categories">Filter Categories<a class="headerlink" href="#filter-categories" title="Permanent link">&para;</a></h4>
 <p>The <code>FilterConfig</code> is an array of objects that match any of the supported filter options. We currently support a <code>MultiSelectFilterCategory</code> and a <code>SingleFilterCategory</code>. See our <a href="https://github.com/lyft/amundsenfrontendlibrary/blob/master/amundsen_application/static/js/config/config-types.ts">config-types</a> for more information about each option.</p>
-<h3 id="table-configuration">Table Configuration<a class="headerlink" href="#table-configuration" title="Permanent link">&para;</a></h3>
-<p><code>TableResourceConfig</code> extends <code>BaseResourceConfig</code> with a <code>supportedDatabases</code> option. This can be used for the following customizations:</p>
-<h4 id="custom-icons">Custom Icons<a class="headerlink" href="#custom-icons" title="Permanent link">&para;</a></h4>
-<p>You can configure custom icons to be used throughout the UI when representing datasets from particular sources/databases. On the <code>TableResourceConfig.supportedDatabases</code> object, add an entry with the <code>id</code> used to reference that database and map to an object that specifies the <code>iconClass</code> for that database. This <code>iconClass</code> should be defined in <a href="https://github.com/lyft/amundsenfrontendlibrary/blob/master/amundsen_application/static/css/_icons.scss">icons.scss</a>.</p>
-<h4 id="display-names">Display Names<a class="headerlink" href="#display-names" title="Permanent link">&para;</a></h4>
-<p>You can configure a specific display name to be used throughout the UI when representing datasets from particular sources/databases. On the <code>TableResourceConfig.supportedDatabases</code> object, add an entry with the <code>id</code> used to reference that database and map to an object that specified the <code>displayName</code> for that database.</p>
+<h4 id="supported-sources">Supported Sources<a class="headerlink" href="#supported-sources" title="Permanent link">&para;</a></h4>
+<p>The <code>SourcesConfig</code> can be used for the customizations detailed below. See examples in <a href="https://github.com/lyft/amundsenfrontendlibrary/blob/master/amundsen_application/static/js/config/config-default.ts">config-default.ts</a>.</p>
+<h5 id="custom-icons">Custom Icons<a class="headerlink" href="#custom-icons" title="Permanent link">&para;</a></h5>
+<p>You can configure custom icons to be used throughout the UI when representing entities from particular sources. On the <code>supportedSources</code> object, add an entry with the <code>id</code> used to reference that source and map to an object that specifies the <code>iconClass</code> for that database. This <code>iconClass</code> should be defined in <a href="https://github.com/lyft/amundsenfrontendlibrary/blob/master/amundsen_application/static/css/_icons.scss">icons.scss</a>.</p>
+<h5 id="display-names">Display Names<a class="headerlink" href="#display-names" title="Permanent link">&para;</a></h5>
+<p>You can configure a specific display name to be used throughout the UI when representing entities from particular sources. On the <code>supportedSources</code> object, add an entry with the <code>id</code> used to reference that source and map to an object that specified the <code>displayName</code> for that source.</p>
 <h2 id="table-lineage">Table Lineage<a class="headerlink" href="#table-lineage" title="Permanent link">&para;</a></h2>
 <p><em>TODO: Please add doc</em></p>
 <h2 id="table-profile">Table Profile<a class="headerlink" href="#table-profile" title="Permanent link">&para;</a></h2>
 <p><em>TODO: Please add doc*</em></p>
 <h2 id="issue-tracking-features">Issue Tracking Features<a class="headerlink" href="#issue-tracking-features" title="Permanent link">&para;</a></h2>
 <p>In order to enable Issue Tracking set <code>IssueTrackingConfig.enabled</code> to <code>true</code> to see UI features. Further configuration
-is required to fully enable the feature, please see this <a href="../flask_config/#issue-tracking-integration-features">entry</a> </p>
+is required to fully enable the feature, please see this <a href="../flask_config/#issue-tracking-integration-features">entry</a></p>
                 
                   
                 

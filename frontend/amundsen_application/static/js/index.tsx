@@ -1,3 +1,5 @@
+import "core-js/stable";
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReduxPromise from 'redux-promise';
@@ -11,6 +13,7 @@ import DocumentTitle from 'react-document-title';
 
 import AnnouncementPage from './components/AnnouncementPage';
 import BrowsePage from './components/BrowsePage';
+import DashboardPage from 'components/DashboardPage';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage'
 import NavBar from './components/NavBar';
@@ -34,20 +37,21 @@ ReactDOM.render(
   <DocumentTitle title="Amundsen - Data Discovery Portal">
     <Provider store={store}>
       <Router history={BrowserHistory}>
-        <div id="main">
+        <main id="main">
           <Preloader/>
           <Route component={NavBar} />
           <Switch>
-            <Route path="/table_detail/:cluster/:database/:schema/:table" component={TableDetail} />
             <Route path="/announcements" component={AnnouncementPage} />
             <Route path="/browse" component={BrowsePage} />
+            <Route path="/dashboard" component={DashboardPage} />
             <Route path="/search" component={SearchPage} />
+            <Route path="/table_detail/:cluster/:database/:schema/:table" component={TableDetail} />
             <Route path="/user/:userId" component={ProfilePage} />
             <Route path="/404" component={NotFoundPage} />
             <Route path="/" component={HomePage} />
           </Switch>
           <Footer />
-        </div>
+        </main>
       </Router>
     </Provider>
   </DocumentTitle>

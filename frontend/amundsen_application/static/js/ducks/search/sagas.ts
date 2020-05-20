@@ -1,6 +1,6 @@
 import { SagaIterator } from 'redux-saga';
 import { all, call, debounce, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
-import * as _ from 'lodash';
+import * as isEqual from 'lodash/isEqual'
 import * as qs from 'simple-query-string';
 
 import { ResourceType, SearchType } from 'interfaces';
@@ -88,7 +88,7 @@ export function* submitSearchResourceWorker(action: SubmitSearchResourceRequest)
     term: search_term,
     index: pageIndex,
   });
-}
+ }
 };
 export function* submitSearchResourceWatcher(): SagaIterator {
  yield takeEvery(SubmitSearchResource.REQUEST, submitSearchResourceWorker);
@@ -140,7 +140,7 @@ export function* urlDidUpdateWorker(action: UrlDidUpdateRequest): SagaIterator {
       yield put(updateSearchState({ resource }))
     }
 
-    if (parsedFilters && !_.isEqual(state.filters[resource], parsedFilters)) {
+    if (parsedFilters && !isEqual(state.filters[resource], parsedFilters)) {
       yield put(submitSearchResource({
         resource,
         searchTerm: term,
@@ -251,11 +251,13 @@ export function* searchAllWatcher(): SagaIterator {
 export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
   const { term } = action.payload;
   try {
-    const [tableResponse, userResponse] = yield all([
+    const [dashboardResponse, tableResponse, userResponse] = yield all([
+      call(API.searchResource, 0, ResourceType.dashboard, term, {}, SearchType.INLINE_SEARCH),
       call(API.searchResource, 0, ResourceType.table, term, {}, SearchType.INLINE_SEARCH),
       call(API.searchResource, 0, ResourceType.user, term, {}, SearchType.INLINE_SEARCH),
     ]);
     const inlineSearchResponse = {
+      dashboards: dashboardResponse.dashboards || initialInlineResultsState.dashboards,
       tables: tableResponse.tables || initialInlineResultsState.tables,
       users: userResponse.users || initialInlineResultsState.users,
     };
@@ -289,6 +291,7 @@ export function* selectInlineResultWorker(action): SagaIterator {
     const data = {
       searchTerm,
       resource: resourceType,
+      dashboards: state.search.inlineResults.dashboards,
       tables: state.search.inlineResults.tables,
       users: state.search.inlineResults.users,
     };

@@ -3,7 +3,6 @@ import * as DocumentTitle from 'react-document-title';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RouteComponentProps } from 'react-router';
-import * as qs from 'simple-query-string';
 
 import { GlobalState } from 'ducks/rootReducer';
 import { getTableData } from 'ducks/tableMetadata/reducer';
@@ -29,13 +28,14 @@ import TableIssues from 'components/TableDetail/TableIssues';
 import WatermarkLabel from 'components/TableDetail/WatermarkLabel';
 import WriterLink from 'components/TableDetail/WriterLink';
 import TagInput from 'components/Tags/TagInput';
-import {TableMetadata} from 'interfaces/TableMetadata';
+import { ResourceType, TableMetadata} from 'interfaces';
 
-import { EditableSection } from 'components/TableDetail/EditableSection';
+import EditableSection from 'components/common/EditableSection';
 
-import { getDatabaseIconClass, issueTrackingEnabled, notificationsEnabled } from 'config/config-utils';
+import { getSourceIconClass, issueTrackingEnabled, notificationsEnabled } from 'config/config-utils';
 
 import { formatDateTimeShort } from 'utils/dateUtils';
+import { getLoggingParams } from 'utils/logUtils';
 
 import './styles';
 import RequestDescriptionText from './RequestDescriptionText';
@@ -66,12 +66,8 @@ class TableDetail extends React.Component<TableDetailProps & RouteComponentProps
   private key: string;
   private didComponentMount: boolean = false;
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    const { index, source } = this.getLoggingParams();
+    const { index, source } = getLoggingParams(this.props.location.search);
 
     this.key = this.getTableKey();
     this.props.getTableData(this.key, index, source);
@@ -82,21 +78,10 @@ class TableDetail extends React.Component<TableDetailProps & RouteComponentProps
     const newKey = this.getTableKey();
 
     if (this.key !== newKey) {
-      const { index, source } = this.getLoggingParams();
+      const { index, source } = getLoggingParams(this.props.location.search);
       this.key = newKey;
       this.props.getTableData(this.key, index, source);
     }
-  }
-
-  getLoggingParams() {
-    const params = qs.parse(this.props.location.search);
-    const index = params['index'];
-    const source = params['source'];
-    /* update the url stored in the browser history to remove params used for logging purposes */
-    if (index !== undefined || source !== undefined) {
-      window.history.replaceState({}, '', `${window.location.origin}${window.location.pathname}`);
-    }
-    return { index, source };
   }
 
   getDisplayName() {
@@ -123,7 +108,7 @@ class TableDetail extends React.Component<TableDetailProps & RouteComponentProps
       innerContent = (
         <div className="container error-label">
           <Breadcrumb />
-          <label className="d-block m-auto">Something went wrong...</label>
+          <label>Something went wrong...</label>
         </div>
       );
     } else {
@@ -136,13 +121,13 @@ class TableDetail extends React.Component<TableDetailProps & RouteComponentProps
           <header className="resource-header">
             <div className="header-section">
               <Breadcrumb />
-              <img className={"icon icon-header " + getDatabaseIconClass(data.database)} />
+              <span className={"icon icon-header " + getSourceIconClass(data.database, ResourceType.table)} />
             </div>
             <div className="header-section header-title">
               <h3 className="header-title-text truncated">
                   { this.getDisplayName() }
               </h3>
-              <BookmarkIcon bookmarkKey={ this.props.tableData.key }/>
+              <BookmarkIcon bookmarkKey={ data.key } resourceType={ ResourceType.table } />
               <div className="body-2">
                 <TableHeaderBullets
                   database={ data.database }
@@ -168,7 +153,7 @@ class TableDetail extends React.Component<TableDetailProps & RouteComponentProps
               <ExploreButton tableData={ data }/>
             </div>
           </header>
-          <main className="column-layout-1">
+          <article className="column-layout-1">
             <section className="left-panel">
               {}
               <EditableSection title="Description">
@@ -203,7 +188,10 @@ class TableDetail extends React.Component<TableDetailProps & RouteComponentProps
                 </section>
                 <section className="right-panel">
                   <EditableSection title="Tags">
-                    <TagInput/>
+                    <TagInput
+                      resourceType={ ResourceType.table }
+                      uriKey={ this.props.tableData.key }
+                    />
                   </EditableSection>
                   <EditableSection title="Owners">
                     <OwnerEditor />
@@ -236,7 +224,7 @@ class TableDetail extends React.Component<TableDetailProps & RouteComponentProps
             <section className="right-panel">
               <ColumnList columns={ data.columns }/>
             </section>
-          </main>
+          </article>
         </div>
       );
     }

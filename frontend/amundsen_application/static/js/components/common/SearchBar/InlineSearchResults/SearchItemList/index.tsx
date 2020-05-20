@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { indexUsersEnabled } from 'config/config-utils';
+import { indexDashboardsEnabled, indexUsersEnabled } from 'config/config-utils';
 
 import { ResourceType } from 'interfaces';
 
@@ -14,12 +14,10 @@ export interface SearchItemListProps {
 }
 
 class SearchItemList extends React.Component<SearchItemListProps, {}> {
-  constructor(props) {
-    super(props);
-  }
-
   getListItemText = (resourceType: ResourceType): string => {
     switch (resourceType) {
+      case ResourceType.dashboard:
+        return CONSTANTS.DASHBOARD_ITEM_TEXT;
       case ResourceType.table:
         return CONSTANTS.DATASETS_ITEM_TEXT;
       case ResourceType.user:
@@ -39,6 +37,15 @@ class SearchItemList extends React.Component<SearchItemListProps, {}> {
           searchTerm={searchTerm}
           resourceType={ResourceType.table}
         />
+        {
+          indexDashboardsEnabled() &&
+          <SearchItem
+            listItemText={this.getListItemText(ResourceType.dashboard)}
+            onItemSelect={onItemSelect}
+            searchTerm={searchTerm}
+            resourceType={ResourceType.dashboard}
+          />
+        }
         {
           indexUsersEnabled() &&
           <SearchItem

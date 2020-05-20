@@ -1,3 +1,6 @@
+import copy
+
+
 class Data:
     entity_type = 'hive_table'
     column_type = 'hive_column'
@@ -5,6 +8,9 @@ class Data:
     db = 'TEST_DB'
     name = 'TEST_TABLE'
     table_uri = f'{entity_type}://{cluster}.{db}/{name}'
+
+    active_columns = 4
+    inactive_columns = 7
 
     classification_entity = {
         'classifications': [
@@ -15,6 +21,7 @@ class Data:
     test_column = {
         'guid': 'COLUMN_GUID',
         'typeName': 'COLUMN',
+        'entityStatus': 'ACTIVE',
         'attributes': {
             'name': 'column name',
             'qualifiedName': 'column@name',
@@ -24,24 +31,50 @@ class Data:
             'statistics': [
                 {'attributes': {
                     'stat_name': 'max',
-                    'stat_val': '100',
+                    'stat_val': 100.1234,
                     'start_epoch': '100',
                     'end_epoch': '200',
                 }},
                 {'attributes': {
                     'stat_name': 'min',
-                    'stat_val': '0',
+                    'stat_val': 0.5678,
                     'start_epoch': '100',
                     'end_epoch': '200',
                 }},
             ]
         },
-
     }
+
+    test_column_inactive = copy.deepcopy(test_column)
+    test_column_inactive['entityStatus'] = 'INACTIVE'
+
+    test_exp_col_stats_raw = [
+        {'attributes': {
+            'stat_name': 'max',
+            'stat_val': '100.1234',
+            'start_epoch': '100',
+            'end_epoch': '200',
+        }},
+        {'attributes': {
+            'stat_name': 'min',
+            'stat_val': '0.5678',
+            'start_epoch': '100',
+            'end_epoch': '200',
+        }},
+    ]
+
+    test_exp_col_stats_formatted = [
+        {'attributes': {
+            'stat_name': 'minimum',
+            'stat_val': '0.57',
+            'start_epoch': '100',
+            'end_epoch': '200',
+        }},
+    ]
 
     db_entity = {
         'guid': '-100',
-        'updateTime': 234,
+        'updateTime': 2345678901234,
         'typeName': entity_type,
         'attributes': {
             'qualifiedName': db,
@@ -54,7 +87,7 @@ class Data:
     entity1 = {
         'guid': '1',
         'typeName': entity_type,
-        'updateTime': 123,
+        'updateTime': 1234567890123,
         'attributes': {
             'qualifiedName': '{}.{}@{}'.format(db, 'Table1', cluster),
             'name': 'Table1',
@@ -66,7 +99,7 @@ class Data:
         },
         'relationshipAttributes': {
             'db': db_entity,
-            'columns': [test_column]
+            'columns': ([test_column_inactive] * inactive_columns) + ([test_column] * active_columns)
         },
     }
     entity1.update(classification_entity)
@@ -96,40 +129,40 @@ class Data:
             entity2,
         ]
     }
-    reader_entity1 = {
-        "typeName": "Reader",
+
+    bookmark_entity1 = {
+        "typeName": "Bookmark",
         "attributes": {
-            "isFollowing": True,
-            "qualifiedName": '{}.{}.{}.reader@{}'.format(db, name, 'test_user_id', cluster),
-            "count": 96,
+            "active": True,
+            "qualifiedName": '{}.{}.{}.{}.bookmark@{}'.format(db, name, 'hive_table', 'test_user_id', cluster),
             "entityUri": table_uri,
         },
         "guid": "0fa40fd5-016c-472e-a72f-25a5013cc818",
         "status": "ACTIVE",
-        "displayText": '{}.{}.{}.reader@{}'.format(db, name, 'test_user_id', cluster),
+        "displayText": '{}.{}.{}.{}.bookmark@{}'.format(db, name, 'hive_table', 'test_user_id', cluster),
         "classificationNames": [],
         "meaningNames": [],
         "meanings": []
     }
 
-    reader_entity2 = {
-        "typeName": "Reader",
+    bookmark_entity2 = {
+        "typeName": "Bookmark",
         "attributes": {
-            "isFollowing": True,
-            "qualifiedName": '{}.{}.{}.reader@{}'.format(db, 'Table2', 'test_user_id', cluster),
-            "count": 96
+            "active": True,
+            "qualifiedName": '{}.{}.{}.{}.bookmark@{}'.format(db, 'Table2', 'hive_table', 'test_user_id', cluster),
+            "entityUri": table_uri,
         },
         "guid": "0fa40fd5-016c-472e-a72f-a72ffa40fd5",
         "status": "ACTIVE",
-        "displayText": '{}.{}.{}.reader@{}'.format(db, 'Table2', 'test_user_id', cluster),
+        "displayText": '{}.{}.{}.{}.bookmark@{}'.format(db, 'Table2', 'hive_table', 'test_user_id', cluster),
         "classificationNames": [],
         "meaningNames": [],
         "meanings": []
     }
 
-    reader_entities = {
+    bookmark_entities = {
         'entities': [
-            reader_entity1,
-            reader_entity2,
+            bookmark_entity1,
+            bookmark_entity2,
         ]
     }

@@ -48,11 +48,11 @@ class TestAtlasProxy(unittest.TestCase, Data):
         self.proxy._get_table_entity = MagicMock(return_value=mocked_entity)  # type: ignore
         return mocked_entity
 
-    def _mock_get_reader_entity(self, entity: Optional[Any] = None) -> Any:
+    def _mock_get_bookmark_entity(self, entity: Optional[Any] = None) -> Any:
         entity = entity or self.entity1
         mocked_entity = MagicMock()
         mocked_entity.entity = entity
-        self.proxy._get_reader_entity = MagicMock(return_value=mocked_entity)  # type: ignore
+        self.proxy._get_bookmark_entity = MagicMock(return_value=mocked_entity)  # type: ignore
         return mocked_entity
 
     def test_extract_table_uri_info(self) -> None:
@@ -88,7 +88,12 @@ class TestAtlasProxy(unittest.TestCase, Data):
 
         self.assertEqual(ent.__repr__(), unique_attr_response.__repr__())
 
-    def test_get_table(self) -> None:
+    def _get_table(self, custom_stats_format: bool = False) -> None:
+        if custom_stats_format:
+            test_exp_col = self.test_exp_col_stats_formatted
+        else:
+            test_exp_col = self.test_exp_col_stats_raw
+
         self._mock_get_table_entity()
         response = self.proxy.get_table(table_uri=self.table_uri)
 
@@ -98,7 +103,7 @@ class TestAtlasProxy(unittest.TestCase, Data):
         col_attrs = cast(dict, self.test_column['attributes'])
         exp_col_stats = list()
 
-        for stats in col_attrs['statistics']:
+        for stats in test_exp_col:
             exp_col_stats.append(
                 Statistics(
                     stat_type=stats['attributes']['stat_name'],
@@ -107,6 +112,7 @@ class TestAtlasProxy(unittest.TestCase, Data):
                     end_epoch=stats['attributes']['end_epoch'],
                 )
             )
+
         exp_col = Column(name=col_attrs['name'],
                          description='column description',
                          col_type='Managed',
@@ -119,9 +125,20 @@ class TestAtlasProxy(unittest.TestCase, Data):
                          tags=[Tag(tag_name=classif_name, tag_type="default")],
                          description=ent_attrs['description'],
                          owners=[User(email=ent_attrs['owner'])],
-                         columns=[exp_col],
-                         last_updated_timestamp=cast(int, self.entity1['updateTime']))
+                         last_updated_timestamp=int(str(self.entity1['updateTime'])[:10]),
+                         columns=[exp_col] * self.active_columns)
+
         self.assertEqual(str(expected), str(response))
+
+    def test_get_table_without_custom_stats_format(self) -> None:
+        self._get_table()
+
+    def test_get_table_with_custom_stats_format(self) -> None:
+        statistics_format_spec = {'min': {'new_name': 'minimum', 'format': '{:,.2f}'},
+                                  'max': {'drop': True}}
+
+        with patch.object(self.proxy, 'STATISTICS_FORMAT_SPEC', statistics_format_spec):
+            self._get_table(custom_stats_format=True)
 
     def test_get_table_not_found(self) -> None:
         with self.assertRaises(NotFoundException):
@@ -254,12 +271,12 @@ class TestAtlasProxy(unittest.TestCase, Data):
                                           description='DOESNT_MATTER')
 
     def test_get_table_by_user_relation(self) -> None:
-        reader1 = copy.deepcopy(self.reader_entity1)
-        reader1 = self.to_class(reader1)
-        reader_collection = MagicMock()
-        reader_collection.entities = [reader1]
+        bookmark1 = copy.deepcopy(self.bookmark_entity1)
+        bookmark1 = self.to_class(bookmark1)
+        bookmark_collection = MagicMock()
+        bookmark_collection.entities = [bookmark1]
 
-        self.proxy._driver.search_basic.create = MagicMock(return_value=reader_collection)
+        self.proxy._driver.search_basic.create = MagicMock(return_value=bookmark_collection)
         res = self.proxy.get_table_by_user_relation(user_email='test_user_id',
                                                     relation_type=UserResourceRel.follow)
 
@@ -269,8 +286,8 @@ class TestAtlasProxy(unittest.TestCase, Data):
         self.assertEqual(res, {'table': expected})
 
     def test_add_resource_relation_by_user(self) -> None:
-        reader_entity = self._mock_get_reader_entity()
-        with patch.object(reader_entity, 'update') as mock_execute:
+        bookmark_entity = self._mock_get_bookmark_entity()
+        with patch.object(bookmark_entity, 'update') as mock_execute:
             self.proxy.add_resource_relation_by_user(id=self.table_uri,
                                                      user_id="test_user_id",
                                                      relation_type=UserResourceRel.follow,
@@ -278,8 +295,8 @@ class TestAtlasProxy(unittest.TestCase, Data):
             mock_execute.assert_called_with()
 
     def test_delete_resource_relation_by_user(self) -> None:
-        reader_entity = self._mock_get_reader_entity()
-        with patch.object(reader_entity, 'update') as mock_execute:
+        bookmark_entity = self._mock_get_bookmark_entity()
+        with patch.object(bookmark_entity, 'update') as mock_execute:
             self.proxy.delete_resource_relation_by_user(id=self.table_uri,
                                                         user_id="test_user_id",
                                                         relation_type=UserResourceRel.follow,

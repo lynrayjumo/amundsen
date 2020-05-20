@@ -1,6 +1,6 @@
 import { UpdateMethod } from './Enums';
 import { User } from './User';
-import { Badge } from 'interfaces/Tags';
+import { Badge } from './Tags';
 
 interface PartitionData {
   is_partitioned: boolean;
@@ -26,6 +26,7 @@ export interface TableColumnStats {
   end_epoch: number;
 }
 
+// TODO - Make this reusable for dashboards
 export interface TableReader {
   read_count: number;
   user: User;

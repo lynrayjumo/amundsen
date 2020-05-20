@@ -15,12 +15,12 @@ const MOCK_ICON_CLASS = 'test-class';
 
 jest.mock('config/config-utils', () => (
   {
-    getDatabaseDisplayName: () => { return MOCK_DISPLAY_NAME },
-    getDatabaseIconClass: () => { return MOCK_ICON_CLASS }
+    getSourceDisplayName: () => { return MOCK_DISPLAY_NAME },
+    getSourceIconClass: () => { return MOCK_ICON_CLASS }
   }
 ));
 
-const getDBIconClassSpy = jest.spyOn(ConfigUtils, 'getDatabaseIconClass');
+const getDBIconClassSpy = jest.spyOn(ConfigUtils, 'getSourceIconClass');
 
 describe('TableListItem', () => {
   const setup = (propOverrides?: Partial<TableListItemProps>) => {
@@ -56,14 +56,17 @@ describe('TableListItem', () => {
     beforeAll(() => {
       wrapper = setup().wrapper;
     });
-    it('calls getDatabaseIconClass with given database id', () => {
+    it('calls getSourceIconClass with given database id', () => {
       const testValue = 'noEffectOnTest';
-      const iconClass = wrapper.instance().generateResourceIconClass(testValue);
-      expect(getDBIconClassSpy).toHaveBeenCalledWith(testValue);
+      const givenResource = ResourceType.table;
+      const iconClass = wrapper.instance().generateResourceIconClass(testValue, givenResource);
+
+      expect(getDBIconClassSpy).toHaveBeenCalledWith(testValue, givenResource);
     });
 
     it('returns the default classes with the correct icon class appended', () => {
       const iconClass = wrapper.instance().generateResourceIconClass('noEffectOnTest');
+
       expect(iconClass).toEqual(`icon resource-icon test-class`);
     });
   });
@@ -77,6 +80,7 @@ describe('TableListItem', () => {
       props = setupResult.props;
       wrapper = setupResult.wrapper;
     });
+
     it('renders item as Link', () => {
       expect(wrapper.find(Link).exists()).toBeTruthy();
     });
@@ -88,7 +92,8 @@ describe('TableListItem', () => {
       });
 
       it('renders start correct icon', () => {
-        const startIcon = resourceInfo.find('img');
+        const startIcon = resourceInfo.find('.resource-icon');
+
         expect(startIcon.exists()).toBe(true);
         expect(startIcon.props().className).toEqual(wrapper.instance().generateResourceIconClass(props.table.database));
       });
@@ -97,8 +102,10 @@ describe('TableListItem', () => {
         expect(resourceInfo.find('.resource-name').children().at(0).text()).toEqual('tableSchema.tableName');
       });
 
-      it('renders a bookmark icon in the resource name', () => {
-        expect(resourceInfo.find('.resource-name').find(BookmarkIcon).exists()).toBe(true);
+      it('renders a bookmark icon in the resource name with correct props', () => {
+        const elementProps = resourceInfo.find('.resource-name').find(BookmarkIcon).props();
+        expect(elementProps.bookmarkKey).toBe(props.table.key);
+        expect(elementProps.resourceType).toBe(props.table.type);
       });
 
       it('renders table description', () => {
@@ -113,7 +120,7 @@ describe('TableListItem', () => {
       });
 
       it('renders resource type', () => {
-        expect(resourceType.text()).toEqual(ConfigUtils.getDatabaseDisplayName(props.table.database));
+        expect(resourceType.text()).toEqual(ConfigUtils.getSourceDisplayName(props.table.database, props.table.type));
       });
     });
 
@@ -141,7 +148,7 @@ describe('TableListItem', () => {
             database: '',
             description: 'I am the description',
             key: '',
-            badges: null, 
+            badges: null,
             name: 'tableName',
             schema: 'tableSchema',
           }});
@@ -155,7 +162,7 @@ describe('TableListItem', () => {
             database: '',
             description: 'I am the description',
             key: '',
-            badges: [], 
+            badges: [],
             name: 'tableName',
             schema: 'tableSchema',
           }});

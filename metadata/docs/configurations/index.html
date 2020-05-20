@@ -447,7 +447,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../databuilder/docs/dashboard_ingestion_guide.md" title="How to ingest Dashboard" class="md-nav__link">
+    <a href="../../../databuilder/docs/dashboard_ingestion_guide/" title="How to ingest Dashboard" class="md-nav__link">
       How to ingest Dashboard
     </a>
   </li>
@@ -849,6 +849,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#statistics_format_spec-optional" class="md-nav__link">
+    STATISTICS_FORMAT_SPEC OPTIONAL
+  </a>
+  
+</li>
+      
       
       
       
@@ -1027,7 +1034,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../databuilder/docs/dashboard_ingestion_guide.md" title="Dashboard Ingestion guide" class="md-nav__link">
+    <a href="../../../databuilder/docs/dashboard_ingestion_guide/" title="Dashboard Ingestion guide" class="md-nav__link">
       Dashboard Ingestion guide
     </a>
   </li>
@@ -1128,6 +1135,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#statistics_format_spec-optional" class="md-nav__link">
+    STATISTICS_FORMAT_SPEC OPTIONAL
+  </a>
+  
+</li>
+      
       
       
       
@@ -1167,6 +1181,23 @@ This custom function takes user_id  as a parameter, and returns a tuple consisti
     <span class="k">return</span> <span class="n">UserSchema</span><span class="p">()</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">user_info</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">HTTPStatus</span><span class="o">.</span><span class="n">OK</span>
 
 <span class="n">USER_DETAIL_METHOD</span> <span class="o">=</span> <span class="n">get_user_details</span>
+</code></pre></div></p>
+<h4 id="statistics_format_spec-optional">STATISTICS_FORMAT_SPEC <code>OPTIONAL</code><a class="headerlink" href="#statistics_format_spec-optional" title="Permanent link">&para;</a></h4>
+<p>This is a variable enabling possibility to reformat statistics displayed in UI.</p>
+<p>The key is name of statistic and a value is a dictionary with optional keys:
+* <strong>new_name</strong> - how to rename statistic (if absent proxy should default to old name)
+* <strong>format</strong> - how to format numerical statistics (if absent, proxy should default to original format)
+* <strong>drop</strong> - should given statistic not be displayed in UI (if absent, proxy should keep it)</p>
+<p>Example (if you&rsquo;re using <a href="https://aws.amazon.com/blogs/big-data/test-data-quality-at-scale-with-deequ/">deeque</a> library), you might want to:
+<div class="highlight"><pre><span></span><code><span class="n">STATISTICS_FORMAT_SPEC</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;stdDev&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">new_name</span><span class="o">=</span><span class="s1">&#39;standard deviation&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;maximum&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;completeness&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:.2%}</span><span class="s1">&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;approximateNumDistinctValues&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">new_name</span><span class="o">=</span><span class="s1">&#39;distinct values&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:,.0f}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">),</span>
+        <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">}</span>
 </code></pre></div></p>
                 
                   

@@ -3,6 +3,7 @@ import { logClick } from 'ducks/utilMethods';
 import { ResourceType } from 'interfaces';
 
 import { SuggestedResult } from '../../InlineSearchResults'
+import Flag from 'components/common/Flag';
 import ResultItem from './ResultItem';
 
 import { RESULT_LIST_FOOTER_PREFIX, RESULT_LIST_FOOTER_SUFFIX } from '../constants';
@@ -17,10 +18,6 @@ export interface ResultItemListProps {
 }
 
 class ResultItemList extends React.Component<ResultItemListProps, {}> {
-  constructor(props) {
-    super(props);
-  }
-
   generateFooterLinkText = () => {
     const { totalResults, title } = this.props;
     return `${RESULT_LIST_FOOTER_PREFIX} ${totalResults} ${title} ${RESULT_LIST_FOOTER_SUFFIX}`;
@@ -38,7 +35,7 @@ class ResultItemList extends React.Component<ResultItemListProps, {}> {
     }
 
     return results.map((item, index) => {
-      const { href, iconClass, subtitle, title, type } = item;
+      const { href, iconClass, subtitle, titleNode, type } = item;
       const id = `inline-resultitem-${this.props.resourceType}:${index}`;
       return (
         <ResultItem
@@ -48,7 +45,7 @@ class ResultItemList extends React.Component<ResultItemListProps, {}> {
           onItemSelect={onResultItemSelect}
           iconClass={`icon icon-dark ${iconClass}`}
           subtitle={subtitle}
-          title={title}
+          titleNode={titleNode}
           type={type}
         />
       )
@@ -59,7 +56,10 @@ class ResultItemList extends React.Component<ResultItemListProps, {}> {
     const { resourceType, suggestedResults, title } = this.props;
     return (
       <>
-        <div className="section-title title-3">{title}</div>
+        <div className="section-title title-3">
+          { title }
+          { resourceType === ResourceType.dashboard && <Flag text="beta" labelStyle="default"/> }
+        </div>
         <ul className="list-group">
           { this.renderResultItems(suggestedResults) }
         </ul>

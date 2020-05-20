@@ -1,6 +1,6 @@
 import logging
-import re
 import uuid
+import itertools
 from typing import Any, List, Dict
 
 from elasticsearch import Elasticsearch
@@ -283,76 +283,6 @@ class ElasticsearchProxy(BaseProxy):
                                        model=Table)
 
     @timer_with_counter
-    def fetch_table_search_results_with_field(self, *,
-                                              query_term: str,
-                                              field_name: str,
-                                              field_value: str,
-                                              page_index: int = 0,
-                                              index: str = '') -> SearchResult:
-        """
-        Query Elasticsearch and return results as list of Table objects
-        In order to support search filtered by field, it uses Elasticsearch's filter.
-        https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html?highlight=filter#dotted-fields
-
-        :param query_term: search query term
-        :param field_name: field name to do the searching(e.g schema, tag_names)
-        :param field_value: value for the field for filtering
-        :param page_index: index of search page user is currently on
-        :param index: current index for search. Provide different index for different resource.
-        :return: SearchResult Object
-        :return:
-        """
-
-        current_index = index if index else \
-            current_app.config.get(config.ELASTICSEARCH_INDEX_KEY, DEFAULT_ES_INDEX)
-
-        s = Search(using=self.elasticsearch, index=current_index)
-
-        if query_term:
-            query_name = {
-                "function_score": {
-                    "query": {
-                        "multi_match": {
-                            "query": query_term,
-                            "fields": ["display_name^1000",
-                                       "name.raw^75",
-                                       "name^5",
-                                       "schema^3",
-                                       "description^3",
-                                       "column_names^2",
-                                       "column_descriptions",
-                                       "tags",
-                                       "badges"],
-                        }
-                    },
-                    "field_value_factor": {
-                        "field": "total_usage",
-                        "modifier": "log2p"
-                    }
-                }
-            }
-        else:
-            query_name = {}
-
-        # Convert field name to actual type in ES doc
-        new_field_name = TABLE_MAPPING[field_name]
-
-        # We allow user to use ? * for wildcard support
-        m = re.search('[?*]', field_value)
-        if m:
-            return self._search_wildcard_helper(field_value=field_value,
-                                                page_index=page_index,
-                                                client=s,
-                                                field_name=new_field_name)
-        else:
-
-            s = s.filter('term', **{new_field_name: field_value})
-            return self._search_helper(page_index=page_index,
-                                       client=s,
-                                       query_name=query_name,
-                                       model=Table)
-
-    @timer_with_counter
     def fetch_table_search_results(self, *,
                                    query_term: str,
                                    page_index: int = 0,
@@ -417,7 +347,7 @@ class ElasticsearchProxy(BaseProxy):
             if mapped_category is None:
                 LOGGING.warn(f'Unsupported filter category: {category} passed in list of filters')
             elif item_list is '' or item_list == ['']:
-                LOGGING.warn(f'The filter value cannot be empty.In this case the filter {category} gets ignored')
+                LOGGING.warn(f'The filter value cannot be empty.In this case the filter {category} is ignored')
             else:
                 query_list.append(mapped_category + ':' + '(' + ' OR '.join(item_list) + ')')
 
@@ -425,6 +355,20 @@ class ElasticsearchProxy(BaseProxy):
             return ''
 
         return ' AND '.join(query_list)
+
+    @staticmethod
+    def validate_filter_values(search_request: dict) -> Any:
+        if 'filters' in search_request:
+            filter_values_list = search_request['filters'].values()
+            # Ensure all values are arrays
+            filter_values_list = list(
+                map(lambda x: x if type(x) == list else [x], filter_values_list))
+            # Flatten the array of arrays
+            filter_values_list = list(itertools.chain.from_iterable(filter_values_list))
+            # Check if / or : exist in any of the values
+            if any(("/" in str(item) or ":" in str(item)) for item in (filter_values_list)):
+                return False
+            return True
 
     @staticmethod
     def parse_query_term(query_term: str) -> str:
@@ -471,8 +415,11 @@ class ElasticsearchProxy(BaseProxy):
         filter_list = search_request.get('filters')
         add_query = ''
         query_dsl = ''
-
         if filter_list:
+            valid_filters = self.validate_filter_values(search_request)
+            if valid_filters is False:
+                raise Exception(
+                    'The search filters contain invalid characters and thus cannot be handled by ES')
             query_dsl = self.parse_filters(filter_list)
 
         if query_term:
@@ -643,8 +590,9 @@ class ElasticsearchProxy(BaseProxy):
                     "multi_match": {
                         "query": query_term,
                         "fields": ["name.raw^75",
-                                   "name^5",
-                                   "group_name.raw^5",
+                                   "name^7",
+                                   "group_name.raw^15",
+                                   "group_name^7",
                                    "description^3",
                                    "query_names^3"]
                     }

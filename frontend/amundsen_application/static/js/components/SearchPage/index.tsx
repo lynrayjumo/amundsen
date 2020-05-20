@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import { Search as UrlSearch } from 'history';
 
 import LoadingSpinner from 'components/common/LoadingSpinner';
-import ResourceList from 'components/common/ResourceList';
+import PaginatedApiResourceList from 'components/common/ResourceList/PaginatedApiResourceList';
 import ResourceSelector from './ResourceSelector';
 import SearchFilter from './SearchFilter';
 import SearchPanel from './SearchPanel';
@@ -34,6 +34,7 @@ import {
   SEARCH_ERROR_MESSAGE_PREFIX,
   SEARCH_ERROR_MESSAGE_SUFFIX,
   SEARCH_SOURCE_NAME,
+  DASHBOARD_RESOURCE_TITLE,
   TABLE_RESOURCE_TITLE,
   USER_RESOURCE_TITLE,
 } from './constants';
@@ -59,10 +60,6 @@ export type SearchPageProps = StateFromProps & DispatchFromProps & RouteComponen
 export class SearchPage extends React.Component<SearchPageProps> {
   public static defaultProps: Partial<SearchPageProps> = {};
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.urlDidUpdate(this.props.location.search);
   }
@@ -87,6 +84,8 @@ export class SearchPage extends React.Component<SearchPageProps> {
 
   generateTabLabel = (tab: ResourceType): string => {
     switch (tab) {
+      case ResourceType.dashboard:
+        return DASHBOARD_RESOURCE_TITLE;
       case ResourceType.table:
         return TABLE_RESOURCE_TITLE;
       case ResourceType.user:
@@ -137,13 +136,13 @@ export class SearchPage extends React.Component<SearchPageProps> {
 
     return (
       <div className="search-list-container">
-        <ResourceList
-          slicedItems={ results.results }
-          slicedItemsCount={ total_results }
-          source={ SEARCH_SOURCE_NAME }
-          itemsPerPage={ RESULTS_PER_PAGE }
+        <PaginatedApiResourceList
           activePage={ page_index }
           onPagination={ this.props.setPageIndex }
+          itemsPerPage={ RESULTS_PER_PAGE }
+          slicedItems={ results.results }
+          source={ SEARCH_SOURCE_NAME }
+          totalItemsCount={ total_results }
         />
       </div>
     );
