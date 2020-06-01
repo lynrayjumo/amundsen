@@ -1,13 +1,14 @@
 import logging
+from re import sub
+from typing import Any, List, Dict, Tuple, Optional
 
 from atlasclient.client import Atlas
 from atlasclient.exceptions import BadRequest
 from atlasclient.models import Entity, EntityCollection
 # default search page size
 from atlasclient.utils import parse_table_qualified_name
-from typing import Any, List, Dict, Tuple, Optional
-from re import sub
 
+from search_service.models.dashboard import SearchDashboardResult
 from search_service.models.search_result import SearchResult
 from search_service.models.table import Table
 from search_service.models.tag import Tag
@@ -207,13 +208,7 @@ class AtlasProxy(BaseProxy):
             # return empty result for blank query term
             return SearchResult(total_results=0, results=[])
 
-        # @todo switch to search with 'query' not 'filters' once Atlas FreeTextSearchProcessor is fixed
-        # https://reviews.apache.org/r/72440/
-        filters = [(self.ATLAS_QN_ATTRIBUTE, 'CONTAINS', query_term)]
-
-        # conduct search using filter on qualifiedName (it already contains both dbName and tableName)
-        # and table description
-        query_params = self._prepare_basic_search_query(self.page_size, page_index, filters=filters, operator='OR')
+        query_params = self._prepare_basic_search_query(self.page_size, page_index, query_term=query_term)
 
         tables, approx_count = self._atlas_basic_search(query_params)
 
@@ -282,5 +277,8 @@ class AtlasProxy(BaseProxy):
     def delete_document(self, *, data: List[str], index: str = '') -> str:
         raise NotImplementedError()
 
-    def fetch_dashboard_search_results(self, *, query_term: str, page_index: int = 0, index: str = '') -> SearchResult:
+    def fetch_dashboard_search_results(self, *,
+                                       query_term: str,
+                                       page_index: int = 0,
+                                       index: str = '') -> SearchDashboardResult:
         pass

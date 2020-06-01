@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { OverlayTrigger, Popover } from 'react-bootstrap';
-
 import EditableSection, { EditableSectionProps } from '.';
 import TagInput from 'components/Tags/TagInput';
 import { ResourceType } from 'interfaces/Resources';
@@ -89,6 +87,11 @@ describe("EditableSection", () => {
       it("link links to editUrl", () => {
         expect(wrapper.find(".edit-button").props().href).toBe(props.editUrl);
       });
+    });
+
+    it("does not render button if readOnly=true and there is no external editUrl", () => {
+      const wrapper = setup({ readOnly: true }, <div/>).wrapper;
+      expect(wrapper.find(".edit-button").exists()).toBeFalsy();
     });
   });
 });

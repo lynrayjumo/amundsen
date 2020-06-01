@@ -350,6 +350,30 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../issue_labeling/" title="Issue and Feature Labeling" class="md-nav__link">
+      Issue and Feature Labeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../CONTRIBUTING/" title="Contributing Guide" class="md-nav__link">
+      Contributing Guide
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1313,12 +1337,12 @@ Run <code>python3 setup.py install</code> in your virtual environment and restar
     table_preview_client_class = amundsen_application.base.examples.example_superset_preview_client:SupersetPreviewClient
 
     [announcement_client]
-    announcement_client_class = path.to.file:CustomAnnouncementClient
+    announcement_client_class = amundsen_application.base.examples.example_announcement_client:SQLAlchemyAnnouncementClient
 &quot;&quot;&quot;
 </code></pre></div>
 
 <h3 id="action-logging">Action Logging<a class="headerlink" href="#action-logging" title="Permanent link">&para;</a></h3>
-<p>Create a custom method to handle action logging. Under the <code>[action_log.post_exec.plugin]</code> group, point the <code>analytic_clients_action_log</code> entry point in your local <code>setup.py</code> to that method.</p>
+<p>Create a custom method to handle action logging. Under the <code>[ action_log.post_exec.plugin]</code> group, point the <code>analytic_clients_action_log</code> entry point in your local <code>setup.py</code> to that method.</p>
 <h3 id="preview-client">Preview Client<a class="headerlink" href="#preview-client" title="Permanent link">&para;</a></h3>
 <p>Create a custom implementation of <a href="https://github.com/lyft/amundsenfrontendlibrary/blob/master/amundsen_application/base/base_preview_client.py">base_preview_client</a>. Under the <code>[preview_client]</code> group, point the <code>table_preview_client_class</code> entry point in your local <code>setup.py</code> to that class.</p>
 <p>For those who use <a href="https://github.com/apache/incubator-superset">Apache Superset</a> for data exploration, see <a href="https://github.com/lyft/amundsenfrontendlibrary/blob/master/docs/examples/superset_preview_client.md">this doc</a> for how to implement a preview client for Superset.</p>
