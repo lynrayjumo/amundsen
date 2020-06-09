@@ -20,7 +20,7 @@ import { DashboardMetadata } from 'interfaces/Dashboard';
 import ImagePreview from './ImagePreview';
 import QueryList from 'components/DashboardPage/QueryList';
 import ChartList from 'components/DashboardPage/ChartList';
-import { formatDateTimeShort } from '../../utils/dateUtils';
+import { formatDateTimeShort } from 'utils/dateUtils';
 import ResourceList from 'components/common/ResourceList';
 import {
   ADD_DESC_TEXT,
@@ -38,11 +38,12 @@ import { getSourceDisplayName, getSourceIconClass } from 'config/config-utils';
 
 import { getLoggingParams } from 'utils/logUtils';
 
+import { NO_TIMESTAMP_TEXT } from 'components/constants';
+
 import './styles.scss';
 
-export interface RouteProps {
-  uri: string;
-}
+const STATUS_SUCCESS = 'success';
+const STATUS_DANGER = 'danger';
 
 interface DashboardPageState {
   uri: string;
@@ -54,42 +55,48 @@ export interface StateFromProps {
   dashboard: DashboardMetadata;
 }
 
+export interface MatchProps {
+  uri: string;
+}
+
 export interface DispatchFromProps {
   getDashboard: (payload: { uri: string, searchIndex?: string, source?: string }) => GetDashboardRequest;
 }
 
-export type DashboardPageProps = RouteComponentProps<RouteProps> & StateFromProps & DispatchFromProps;
+export type DashboardPageProps = RouteComponentProps<MatchProps> & StateFromProps & DispatchFromProps;
 
 export class DashboardPage extends React.Component<DashboardPageProps, DashboardPageState> {
+
   constructor(props) {
     super(props);
+    const { uri } = this.props.match.params;
 
-    const { uri } = qs.parse(this.props.location.search);
     this.state = { uri };
   }
 
   componentDidMount() {
-    this.loadDashboard(this.state.uri);
-  }
-
-  loadDashboard(uri: string) {
     const { index, source } = getLoggingParams(this.props.location.search);
+    const { uri } = this.props.match.params;
+
     this.props.getDashboard({ source, uri, searchIndex: index });
+    this.setState({ uri });
   }
 
   componentDidUpdate() {
-    const { uri } = qs.parse(this.props.location.search);
+    const { uri } = this.props.match.params;
+
     if (this.state.uri !== uri) {
+      const { index, source } = getLoggingParams(this.props.location.search);
       this.setState({ uri });
-      this.loadDashboard(uri);
+      this.props.getDashboard({ source, uri, searchIndex: index });
     }
   };
 
   mapStatusToStyle = (status: string): string => {
     if (status === LAST_RUN_SUCCEEDED) {
-      return 'success';
+      return STATUS_SUCCESS;
     }
-    return 'danger';
+    return STATUS_DANGER;
   };
 
   renderTabs() {
@@ -259,15 +266,23 @@ export class DashboardPage extends React.Component<DashboardPageProps, Dashboard
                 </EditableSection>
                 <section className="metadata-section">
                   <div className="section-title title-3">Last Successful Run</div>
-                  <div className="body-2 text-primary">
-                    { formatDateTimeShort({ epochTimestamp: dashboard.last_successful_run_timestamp }) }
+                  <div className="last-successful-run-timestamp body-2 text-primary">
+                    {
+                      dashboard.last_successful_run_timestamp ?
+                      formatDateTimeShort({ epochTimestamp: dashboard.last_successful_run_timestamp }) :
+                      NO_TIMESTAMP_TEXT
+                    }
                   </div>
                 </section>
                 <section className="metadata-section">
                   <div className="section-title title-3">Last Run</div>
                   <div>
-                    <div className="body-2 text-primary">
-                      { formatDateTimeShort({ epochTimestamp: dashboard.last_run_timestamp }) }
+                    <div className="last-run-timestamp body-2 text-primary">
+                      {
+                        dashboard.last_run_timestamp ?
+                        formatDateTimeShort({ epochTimestamp: dashboard.last_run_timestamp }) :
+                        NO_TIMESTAMP_TEXT
+                      }
                     </div>
                     <div className="last-run-state">
                       <Flag
